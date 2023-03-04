@@ -10,23 +10,87 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * 
+ * @author Cole Stoltz
+ * Simple controller class to handle navigation between scenes
+ * of the program.
+ *
+ * Each method contains an alert if the proper FXML file cannot be found.
+ */
+
 public class NavigationController {
 
-	@FXML BorderPane mainBorderPane;
-	@FXML Button clientsButton;
+	@FXML private BorderPane mainBorderPane;
+	@FXML private Button clientsButton;
 	
-	// Load scenes for use in navigation switching
+	/**
+	 * @param ActionEvent
+	 * @return void
+	 * Switches to to home scene FXML file.
+	 */
 	
-	public void switchToClientScene(ActionEvent e) {
+	public void switchToHomeScene(ActionEvent e) {
+		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 			Alert sceneAlert = new Alert(AlertType.ERROR);
-			sceneAlert.setContentText("Could not load a scene file for the client page.\nEmail the developer the log file located in ...");
+			sceneAlert.setContentText("Could not load a scene file for the \"home\" page.\nContact the developer about this issue.");
 			sceneAlert.show();
 		}
 	}
 	
+	/**
+	 * 
+	 * @param ActionEvent
+	 * @return void
+	 * Switches to scheduling scene FXML file.
+	 */
+	
+	public void switchToScheduleScene(ActionEvent e) {
+		
+		try {
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
+		} catch (IOException e1) {
+			Alert sceneAlert = new Alert(AlertType.ERROR);
+			sceneAlert.setContentText("Could not load a scene file for the \"schedule\" page.\nContact the developer about this issue.");
+			sceneAlert.show();
+		}
+	}
+	
+	/**
+	 * @param ActioneEvent
+	 * @return void
+	 * Switches to client scene FXML file.
+	 */
+	
+	public void switchToClientScene(ActionEvent e) {
+		
+		try {
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+		} catch (IOException e1) {
+			Alert sceneAlert = new Alert(AlertType.ERROR);
+			sceneAlert.setContentText("Could not load a scene file for the \"client\" page.\nContact the developer about this issue.");
+			sceneAlert.show();
+		}
+	}
+	
+	/**
+	 * @param ActioneEvent
+	 * @return void
+	 * Switches to instructor scene FXML file.
+	 */
+	
+	public void switchToInstructorScene(ActionEvent e) {
+		
+		try {
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
+		} catch (IOException e1) {
+			
+			Alert sceneAlert = new Alert(AlertType.ERROR);
+			sceneAlert.setContentText("Could not load a scene file for the \"instructor\" page.\nContact the developer about this issue.");
+			sceneAlert.show();
+		}
+	}
 }
