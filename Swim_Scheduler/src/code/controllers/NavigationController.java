@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -22,7 +23,10 @@ import javafx.scene.layout.BorderPane;
 public class NavigationController {
 
 	@FXML private BorderPane mainBorderPane;
+	@FXML private Button homeButton;
+	@FXML private Button scheduleButton;
 	@FXML private Button clientsButton;
+	@FXML private Button instructorsButton;
 	
 	/**
 	 * @param ActionEvent
@@ -33,7 +37,7 @@ public class NavigationController {
 	public void switchToHomeScene(ActionEvent e) {
 		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/HomeScene.fxml")));
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"home\" page.\nContact the developer about this issue.");
@@ -51,7 +55,7 @@ public class NavigationController {
 	public void switchToScheduleScene(ActionEvent e) {
 		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduleScene.fxml")));
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"schedule\" page.\nContact the developer about this issue.");
@@ -85,7 +89,7 @@ public class NavigationController {
 	public void switchToInstructorScene(ActionEvent e) {
 		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/InstructorsScene.fxml")));
 		} catch (IOException e1) {
 			
 			Alert sceneAlert = new Alert(AlertType.ERROR);
@@ -93,4 +97,5 @@ public class NavigationController {
 			sceneAlert.show();
 		}
 	}
+	
 }
