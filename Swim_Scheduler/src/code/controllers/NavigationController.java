@@ -1,14 +1,17 @@
 package code.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -27,6 +30,17 @@ public class NavigationController {
 	@FXML private Button scheduleButton;
 	@FXML private Button clientsButton;
 	@FXML private Button instructorsButton;
+	@FXML private Label timeLabel;
+	@FXML private Label dateLabel;
+	
+	/**
+	 * No parameter function that initializes data before loading the FXML file.
+	 * @return void
+	 */
+	
+	public void initialize() {
+		initializeDateAndTime();
+	}
 	
 	/**
 	 * @param ActionEvent
@@ -96,6 +110,24 @@ public class NavigationController {
 			sceneAlert.setContentText("Could not load a scene file for the \"instructor\" page.\nContact the developer about this issue.");
 			sceneAlert.show();
 		}
+	}
+	
+	/**
+	 * Sets the date and time to update every second.
+	 */
+	
+	public void initializeDateAndTime() {
+		AnimationTimer updater = new AnimationTimer() {
+			@Override // This must be overwritten when using the timer
+			// Is called every frame
+			public void handle(long now) {
+				timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("h:mm a")));
+			}
+			
+		};
+		
+		updater.start();
+		
 	}
 	
 }
