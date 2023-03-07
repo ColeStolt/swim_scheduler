@@ -2,15 +2,17 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #212121;" stylesheets="@../css/mainSceneSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.NavigationController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #212121; -fx-border-width: 4px;" stylesheets="@../css/mainSceneSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.NavigationController">
    <left>
-      <VBox fx:id="vBoxNavigationContainer" alignment="CENTER" prefHeight="720.0" prefWidth="197.0" spacing="60.0" style="-fx-background-color: rgb(25, 25, 25); -fx-border-color: #212121; -fx-border-width: 8;" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBoxNavigationContainer" alignment="CENTER" prefHeight="720.0" prefWidth="197.0" spacing="60.0" style="-fx-background-color: rgb(25, 25, 25); -fx-border-color: rgb(25, 25, 25); -fx-border-width: 8;" BorderPane.alignment="CENTER">
          <children>
             <Button id="homeButton" fx:id="homeButton" mnemonicParsing="false" onAction="#switchToHomeScene" prefHeight="47.0" prefWidth="202.0" styleClass="navigationButton" text="Home">
                <graphic>
@@ -74,4 +76,20 @@
          </children>
       </VBox>
    </left>
+   <top>
+      <AnchorPane prefHeight="44.0" prefWidth="1280.0" style="-fx-background-color: rgb(25, 25, 25);" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="timeLabel" layoutX="256.0" layoutY="9.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateLabel" layoutX="1029.0" layoutY="9.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

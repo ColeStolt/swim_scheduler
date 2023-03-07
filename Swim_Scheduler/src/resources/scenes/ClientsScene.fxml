@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane minHeight="500.0" minWidth="500.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
-   <center>
-      <ScrollPane fx:id="clientScroller" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <VBox fx:id="scrollPaneContainer" alignment="CENTER" />
-         </content>
-      </ScrollPane>
-   </center>
+<BorderPane prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121; -fx-border-color: #212121;" stylesheets="@../css/clientSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
    <bottom>
-      <Button fx:id="butt" mnemonicParsing="false" onAction="#addButt" text="Button" BorderPane.alignment="CENTER" />
+      <Button id="addClientButton" fx:id="butt" mnemonicParsing="false" prefHeight="52.0" prefWidth="525.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" text="Add Client" textFill="WHITE" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="Calibri Bold" size="31.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </bottom>
+   <center>
+      <AnchorPane id="centerAnchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #212121; -fx-border-width: 5px 5px 1px 7px;" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
