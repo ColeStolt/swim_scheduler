@@ -122,6 +122,7 @@ public class NavigationController {
 			// Is called every frame
 			public void handle(long now) {
 				timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("h:mm a")));
+				dateLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 			}
 			
 		};
