@@ -7,9 +7,30 @@
 }
 
 #addClientButton:pressed{
-    -fx-background-color: rgb(22, 47, 67)
+    -fx-background-color: rgb(22, 47, 67);
 }
 
 #centerAnchorPane {
     -fx-background-color: #343E47;
+}
+
+#scrollPane > .corner {
+	-fx-background-color:  #343E47;
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track{
+	-fx-background-color:  #212121;
+	-fx-max-width: 1px;
+}
+
+.increment-button,
+.decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.increment-arrow,
+.decrement-arrow {
+	-fx-background-color: transparent;
 }

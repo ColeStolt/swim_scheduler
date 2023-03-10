@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -7,10 +8,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #212121; -fx-border-width: 4px;" stylesheets="@../css/mainSceneSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.NavigationController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #212121; -fx-border-width: 4px;" stylesheets="@../css/mainSceneSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.NavigationController">
    <left>
       <VBox fx:id="vBoxNavigationContainer" alignment="CENTER" prefHeight="720.0" prefWidth="197.0" spacing="60.0" style="-fx-background-color: rgb(25, 25, 25); -fx-border-color: rgb(25, 25, 25); -fx-border-width: 8;" BorderPane.alignment="CENTER">
          <children>
@@ -77,29 +79,41 @@
       </VBox>
    </left>
    <top>
-      <AnchorPane prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: rgb(25, 25, 25); -fx-border-width: 0 0 5px 0; -fx-border-color: #161616;" BorderPane.alignment="CENTER">
+      <HBox minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="1280.0" style="-fx-border-width: 0 0 7px 0; -fx-border-color: rgb(25, 25, 25);" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="611.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/calendar_date.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="timeLabel" layoutX="90.0" layoutY="9.0" text="Label" textFill="WHITE">
-               <font>
-                  <Font name="Calibri Bold" size="21.0" />
-               </font>
-            </Label>
-            <Label fx:id="dateLabel" layoutX="654.0" layoutY="10.0" text="Label" textFill="WHITE">
-               <font>
-                  <Font name="Calibri Bold" size="21.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="45.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/time.png" />
-               </image>
-            </ImageView>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="timeLabel" layoutX="210.0" layoutY="13.0" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="170.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/time.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="dateLabel" layoutX="209.0" layoutY="13.0" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="168.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendar_date.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children>
-      </AnchorPane>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
    </top>
 </BorderPane>
