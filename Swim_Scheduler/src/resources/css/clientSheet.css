@@ -34,3 +34,27 @@
 .decrement-arrow {
 	-fx-background-color: transparent;
 }
+
+#topLabelsContainer {
+	-fx-border-width: 0 0 5px 0;
+	-fx-border-color: black;
+}
+
+#mainCardPane{
+	-fx-border-width: 10px;
+	-fx-border-color: #28547C;
+	-fx-background-color: #28547C;
+	-fx-font-size: 35;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+}
+
+#mainCardPane:hover{
+	-fx-background-color: red;
+	-fx-cursor: hand;
+}
+
+#mainCardPane:pressed{
+	-fx-background-color: green;
+}
+

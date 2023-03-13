@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121; -fx-border-color: #212121;" stylesheets="@../css/clientSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
+<BorderPane fx:id="mainClientScenePane" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121; -fx-border-color: #212121;" stylesheets="@../css/clientSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
    <bottom>
       <Button id="addClientButton" fx:id="addClientButton" mnemonicParsing="false" onAction="#addButt" prefHeight="52.0" prefWidth="525.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" text="Add Client" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -22,7 +22,7 @@
          </cursor></Button>
    </bottom>
    <center>
-      <ScrollPane id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #343E47; -fx-border-color: #343E47; -fx-border-width: 17px; -fx-border-radius: 25px; -fx-background-radius: 39px;" BorderPane.alignment="CENTER">
+      <ScrollPane id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #343E47; -fx-border-color: #343E47; -fx-border-width: 17px; -fx-border-radius: 3px; -fx-background-radius: 39px;" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="scrollPaneVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #343E47; -fx-border-color: #343E47;" />
          </content>

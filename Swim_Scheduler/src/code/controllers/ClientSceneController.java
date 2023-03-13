@@ -1,26 +1,23 @@
 package code.controllers;
 
+import code.dataObjects.Client;
+import code.services.ClientCard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class ClientSceneController {
 
 	@FXML Button addClientButton;
 	@FXML VBox scrollPaneVBox;
+	@FXML BorderPane mainClientScenePane;
 	
 	public void addButt(ActionEvent e) {
 		
-		Button butt = new Button("BEAN \n\n\n\n BEAN");
-		butt.setMaxWidth(100);
-		butt.setPrefWidth(100);
-		butt.setMinWidth(100);
-		butt.setMaxHeight(100);
-		butt.setMinHeight(100);
-		butt.setPrefHeight(100);
-		
-		scrollPaneVBox.getChildren().add(butt);
+		scrollPaneVBox.setFillWidth(true);
+		scrollPaneVBox.getChildren().add(new ClientCard(new Client("Cole Stoltz", "114 lemley dr.", "469-338-2514", (short)5, "Yung G", (short)12, 125, true)));
 	}
 	// Comment
 }
