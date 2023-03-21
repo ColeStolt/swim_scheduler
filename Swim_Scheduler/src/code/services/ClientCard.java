@@ -37,6 +37,7 @@ public class ClientCard extends BorderPane{
 		this.setMaxWidth(Double.MAX_VALUE);
 		this.setTop(topLabelBox());
 		this.setCenter(centerLabelContainer());
+		this.setBottom(cardBottomLabels());
 		
 	}
 	
@@ -49,29 +50,44 @@ public class ClientCard extends BorderPane{
 	private HBox topLabelBox() {
 		HBox topLabels = new HBox();
 		
+		BorderPane phoneNumberPane = new BorderPane();
 		BorderPane namePane = new BorderPane();
-		BorderPane totalAmountPane = new BorderPane();
+		BorderPane addressPane = new BorderPane();
 		
 		// Labels ---
+		Label phoneNumberLabel = new Label(clientReference.getPhoneNumber());
 		Label nameLabel = new Label(clientReference.getClientName());
-		Label totalPriceLabel = new Label("Total: $" + Float.toString(clientReference.getTotalAmountForLessons()));
+		Label addressLabel = new Label(clientReference.getAddressOfLessons());
+		
+		// Label IDs
+		phoneNumberLabel.setId("phoneAndAddress");
+		addressLabel.setId("phoneAndAddress");
 		
 		// Grow properties ---
+		HBox.setHgrow(phoneNumberPane, Priority.ALWAYS);
 		HBox.setHgrow(namePane, Priority.ALWAYS);
-		HBox.setHgrow(totalAmountPane, Priority.ALWAYS);
+		HBox.setHgrow(addressPane, Priority.ALWAYS);
 		
 		// Pane properties ---
+		phoneNumberPane.setCenter(phoneNumberLabel);
 		namePane.setCenter(nameLabel);
-		totalAmountPane.setCenter(totalPriceLabel);
+		addressPane.setCenter(addressLabel);
 		
 		// Settings ----
 		topLabels.setId("topLabelsContainer");
 		topLabels.setAlignment(Pos.CENTER);
 		topLabels.setMinWidth(0);
 		
+		if(clientReference.isPaidInFull()) {
+			topLabels.setStyle("-fx-background-color: #234736;");
+		} else {
+			topLabels.setStyle("-fx-background-color: #442727;");
+		}
+		
 		// Adding nodes ----
+		topLabels.getChildren().add(phoneNumberPane);
 		topLabels.getChildren().add(namePane);
-		topLabels.getChildren().add(totalAmountPane);
+		topLabels.getChildren().add(addressPane);
 		
 		return topLabels;
 	}
@@ -80,21 +96,35 @@ public class ClientCard extends BorderPane{
 		// Panes ---
 		// This a lot of panes but it makes it 
 		// all pwetty and centered.
-		GridPane centerLabels = new GridPane();
-		BorderPane addressPane = new BorderPane();
-		BorderPane phoneNumberPane = new BorderPane();
-		BorderPane totalKidsPane = new BorderPane();
+		GridPane centerLabels = new GridPane(); 
+		BorderPane addressPane = new BorderPane(); 
+		BorderPane phoneNumberPane = new BorderPane(); 
+		BorderPane totalKidsPane = new BorderPane(); 
 		BorderPane instructorPane = new BorderPane();
 		BorderPane numberOfLessonsPane = new BorderPane();
 		BorderPane amountPerLessonPane = new BorderPane();
+		BorderPane totalAmountPane = new BorderPane();
 		
 		// Labels ---
-		Label addressLabel = new Label("Address Of Lessons: " + clientReference.getAddressOfLessons());
-		Label phoneNumberLabel = new Label("Phone Number : " + clientReference.getPhoneNumber());
-		Label totalKidsLabel = new Label("Kids: " + clientReference.getNumberOfKids());
-		Label instructorLabel = new Label("Instructor: " + clientReference.getInstructor());
-		Label numberOfLessonsLabel = new Label("Lessons Per Kid: " + clientReference.getNumberOfLessons());
-		Label amountPerLessonLabel = new Label("Amount Per Lesson: " + clientReference.getTotalAmountForLessons());
+		Label totalKidsLabelTop = new Label(Integer.toString(clientReference.getNumberOfKids()));
+		Label totalKidsLabelBottom = new Label("KIDS");
+		Label numberOfLessonsLabelTop = new Label(Short.toString(clientReference.getNumberOfLessons()));
+		Label numberOfLessonsLabelBottom = new Label("LESSONS");
+		Label amountPerLessonLabelTop = new Label("$ " + String.format("%.2f", clientReference.getAmountPerLesson()));
+		Label amountPerLessonLabelBottom = new Label("$ PER LESSON");
+		Label totalAmountLabelTop = new Label("$ " + String.format("%.2f", clientReference.getTotalAmountForLessons()));
+		Label totalAmountLabelBottom = new Label("$ TOTAL");
+	
+		// Pane IDS
+		totalKidsPane.setId("kidsPane");
+		totalKidsLabelBottom.setId("bottomLabels");
+		numberOfLessonsLabelBottom.setId("bottomLabels");
+		amountPerLessonLabelBottom.setId("bottomLabels");
+		totalAmountLabelBottom.setId("bottomLabels");
+		BorderPane.setAlignment(totalKidsLabelBottom, Pos.CENTER);
+		BorderPane.setAlignment(numberOfLessonsLabelBottom, Pos.CENTER);
+		BorderPane.setAlignment(amountPerLessonLabelBottom, Pos.CENTER);
+		BorderPane.setAlignment(totalAmountLabelBottom, Pos.CENTER);
 		
 		// Pane settings ---
 		GridPane.setHgrow(addressPane, Priority.ALWAYS);
@@ -103,30 +133,45 @@ public class ClientCard extends BorderPane{
 		GridPane.setHgrow(instructorPane, Priority.ALWAYS);
 		GridPane.setHgrow(numberOfLessonsPane, Priority.ALWAYS);
 		GridPane.setHgrow(amountPerLessonPane, Priority.ALWAYS);
-		addressPane.setCenter(addressLabel);
-		phoneNumberPane.setCenter(phoneNumberLabel);
-		totalKidsPane.setCenter(totalKidsLabel);
-		instructorPane.setCenter(instructorLabel);
-		numberOfLessonsPane.setCenter(numberOfLessonsLabel);
-		amountPerLessonPane.setCenter(amountPerLessonLabel);
+		GridPane.setHgrow(totalAmountPane, Priority.ALWAYS);
+	
+		totalKidsPane.setCenter(totalKidsLabelTop);
+		totalKidsPane.setBottom(totalKidsLabelBottom);
+		numberOfLessonsPane.setCenter(numberOfLessonsLabelTop);
+		numberOfLessonsPane.setBottom(numberOfLessonsLabelBottom);
+		amountPerLessonPane.setCenter(amountPerLessonLabelTop);
+		amountPerLessonPane.setBottom(amountPerLessonLabelBottom);
+		totalAmountPane.setCenter(totalAmountLabelTop);
+		totalAmountPane.setBottom(totalAmountLabelBottom);
+
 		
 		// Constraints ---
-		GridPane.setConstraints(instructorPane, 1, 0);
-		GridPane.setConstraints(phoneNumberPane, 0, 0);
-		GridPane.setConstraints(totalKidsPane, 1, 1);
-		GridPane.setConstraints(addressPane, 0, 1);
-		GridPane.setConstraints(numberOfLessonsPane, 1, 2);
-		GridPane.setConstraints(amountPerLessonPane, 0, 2);
+		GridPane.setConstraints(totalKidsPane, 0, 0);
+		GridPane.setConstraints(numberOfLessonsPane, 1, 0);
+		GridPane.setConstraints(amountPerLessonPane, 2, 0);
+		GridPane.setConstraints(totalAmountPane, 3, 0);
+	
 		
 		// Adding the nodes --
-		centerLabels.getChildren().add(addressPane);
-		centerLabels.getChildren().add(phoneNumberPane);
 		centerLabels.getChildren().add(totalKidsPane);
-		centerLabels.getChildren().add(instructorPane);
 		centerLabels.getChildren().add(numberOfLessonsPane);
 		centerLabels.getChildren().add(amountPerLessonPane);
+		centerLabels.getChildren().add(totalAmountPane);
 		
 		return centerLabels;
+	}
+	
+	private BorderPane cardBottomLabels() {
+		BorderPane instructorPane = new BorderPane();
+		
+		// Labels
+		Label instructorLabel = new Label(clientReference.getInstructor());
+		
+		// Pane settings
+		instructorPane.setId("cardBottomLabels");
+		instructorPane.setCenter(instructorLabel);
+		
+		return instructorPane;
 	}
 	
 	// Getters / Setters

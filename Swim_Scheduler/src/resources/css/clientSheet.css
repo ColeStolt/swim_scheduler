@@ -36,8 +36,10 @@
 }
 
 #topLabelsContainer {
-	-fx-border-width: 0 0 5px 0;
-	-fx-border-color: black;
+	-fx-background-color: #183147;
+	-fx-border-color: #183147;
+	-fx-border-radius: 25px;
+	-fx-background-radius: 25px;
 }
 
 #mainCardPane{
@@ -56,5 +58,19 @@
 
 #mainCardPane:pressed{
 	-fx-background-color: green;
+}
+
+#phoneAndAddress{
+	-fx-text-fill: #8A8A8A;
+	-fx-font-size: 25;
+}
+
+#totalKidsPane{
+	
+}
+
+#bottomLabels{
+	-fx-font-size: 20;
+	-fx-text-fill: #8A8A8A;
 }
 

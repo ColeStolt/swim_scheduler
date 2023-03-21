@@ -79,7 +79,7 @@
       </VBox>
    </left>
    <top>
-      <HBox minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="1280.0" style="-fx-border-width: 0 0 7px 0; -fx-border-color: rgb(25, 25, 25);" BorderPane.alignment="CENTER">
+      <HBox minHeight="0.0" minWidth="0.0" prefHeight="57.0" prefWidth="1280.0" style="-fx-border-width: 0 0 7px 0; -fx-border-color: rgb(25, 25, 25); -fx-background-color: rgb(25, 25, 25);" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>

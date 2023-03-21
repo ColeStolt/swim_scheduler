@@ -17,7 +17,7 @@ public class ClientSceneController {
 	public void addButt(ActionEvent e) {
 		
 		scrollPaneVBox.setFillWidth(true);
-		scrollPaneVBox.getChildren().add(new ClientCard(new Client("Cole Stoltz", "114 lemley dr.", "469-338-2514", (short)5, "Yung G", (short)12, 125, true)));
+		scrollPaneVBox.getChildren().add(new ClientCard(new Client("Taco Bell", "2345 Bean Burrito dr.", "123-456-7890", (short)5, "Yung G", (short)12, 125, false)));
 	}
 	// Comment
 }
