@@ -1,10 +1,10 @@
 package code.services;
 
 import code.dataObjects.Client;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -161,17 +161,18 @@ public class ClientCard extends BorderPane{
 		return centerLabels;
 	}
 	
-	private BorderPane cardBottomLabels() {
-		BorderPane instructorPane = new BorderPane();
+	private FlowPane cardBottomLabels() {
+		FlowPane instructorFlow = new FlowPane();
 		
 		// Labels
 		Label instructorLabel = new Label(clientReference.getInstructor());
+		instructorLabel.setId("instructorLabel");
 		
-		// Pane settings
-		instructorPane.setId("cardBottomLabels");
-		instructorPane.setCenter(instructorLabel);
+		// Flow settings
+		instructorFlow.setId("cardBottomLabels");
+		instructorFlow.getChildren().add(instructorLabel);
 		
-		return instructorPane;
+		return instructorFlow;
 	}
 	
 	// Getters / Setters

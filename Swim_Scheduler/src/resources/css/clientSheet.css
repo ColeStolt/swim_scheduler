@@ -52,12 +52,14 @@
 }
 
 #mainCardPane:hover{
-	-fx-background-color: red;
+	-fx-background-color: #17324a;
+	-fx-border-color: #17324a;
 	-fx-cursor: hand;
 }
 
 #mainCardPane:pressed{
-	-fx-background-color: green;
+	-fx-background-color: #1f4a70;
+	-fx-border-color: #1f4a70;
 }
 
 #phoneAndAddress{
@@ -65,8 +67,16 @@
 	-fx-font-size: 25;
 }
 
-#totalKidsPane{
-	
+#cardBottomLabels{
+	-fx-border-color: transparent;
+	-fx-background-color: transparent;
+	-fx-font-size: 20;
+}
+
+
+#instructorLabel{
+	-fx-padding: 0 0 0 10px;
+	-fx-text-fill: #000000;
 }
 
 #bottomLabels{
