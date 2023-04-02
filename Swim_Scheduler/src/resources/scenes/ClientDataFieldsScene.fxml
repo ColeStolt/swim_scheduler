@@ -10,7 +10,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="saveButton" fx:id="saveButton" alignment="CENTER" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="353.0" style="-fx-background-color: #234736;" styleClass="bottomButtons" text="Save" textFill="WHITE">
+            <Button id="saveButton" fx:id="saveButton" alignment="CENTER" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#saveClient" prefHeight="52.0" prefWidth="353.0" style="-fx-background-color: #234736;" styleClass="bottomButtons" text="Save" textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="31.0" />
                </font>

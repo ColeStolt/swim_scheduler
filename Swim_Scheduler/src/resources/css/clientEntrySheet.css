@@ -26,7 +26,7 @@
 
 #fields{
 	-fx-border-color:  #343E47;
-	-fx-border-width: 0 10px 10px 10px 10px;
+	-fx-border-width: 0 10px 10px 10px;
 	-fx-text-fill: #ffffff;
 	-fx-font-family: Calibri;
 	-fx-font-weight: bold;
@@ -51,4 +51,53 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 25px;
 	-fx-background-color: #242B32;
+}
+
+#choiceBox {
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0 10px 10px 10px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+	-fx-mark-color: #ffffff;
+}
+
+#choiceBox .label{
+	-fx-text-fill: #ffffff;
+	
+}
+
+#choiceBox .context-menu {
+    -fx-background-color: #343E47;
+}
+
+#radioButton {
+	-fx-border-color:  #343E47;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 15px;
+	-fx-background-color: #343E47;
+	-fx-border-width: 1px 10px 10px 5px;
+}
+
+#clientInfoTitle {
+	-fx-text-fill: #979797;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 50px;
+	-fx-border-color:  #343E47;
+	-fx-text-alignment: center;
+	-fx-border-width: 0px 0px 10px 0px;
+}
+
+#lessonInfoTitle {
+	-fx-text-fill: #979797;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 50px;
+	-fx-border-color:  #343E47;
+	-fx-text-alignment: center;
+	-fx-border-width: 0px 0px 55px 0px;
 }
