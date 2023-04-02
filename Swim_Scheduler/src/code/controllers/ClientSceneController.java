@@ -1,9 +1,12 @@
 package code.controllers;
 
+import java.io.IOException;
+
 import code.datapersistance_dao.ClientDataDB;
 import code.services.ClientCard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -32,7 +35,14 @@ public class ClientSceneController {
 	}
 	
 	public void addButt(ActionEvent e) {
-		
+		try {
+			mainClientScenePane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
+			mainClientScenePane.setBottom(null);
+			mainClientScenePane.setTop(null);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	// Update the client list as user type (VERY NEAT)

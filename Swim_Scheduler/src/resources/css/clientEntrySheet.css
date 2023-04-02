@@ -1,0 +1,54 @@
+.bottomButtons{
+	-fx-border-radius: 10px;
+	-fx-background-radius: 10px;
+	-fx-cursor: hand;
+}
+
+#saveButton{
+	-fx-background-color:  #234736;	
+}
+
+#saveButton:hover{
+	
+}
+
+#cancelButton {
+	-fx-background-color:  #442727;
+}
+
+#cancelButton:hover{
+	-fx-background-color: #361A1A;
+}
+
+#cancelButton:pressed{
+	-fx-background-color: #422020;
+}
+
+#fields{
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0 10px 10px 10px 10px;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+}
+
+#labels{
+	-fx-text-fill: #979797;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0 0 0 10px;
+}
+
+#phoneNumberField{
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0 10px 10px 10px;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+}

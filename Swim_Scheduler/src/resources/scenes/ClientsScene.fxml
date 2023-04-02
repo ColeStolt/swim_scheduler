@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainClientScenePane" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121; -fx-border-color: #212121;" stylesheets="@../css/clientSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
+<BorderPane fx:id="mainClientScenePane" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121; -fx-border-style: none; -fx-border-width: 0; -fx-border-insets: 0;" stylesheets="@../css/clientSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ClientSceneController">
    <bottom>
       <Button id="addClientButton" fx:id="addClientButton" mnemonicParsing="false" onAction="#addButt" prefHeight="52.0" prefWidth="525.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px;" text="Add Client" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
