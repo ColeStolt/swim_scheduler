@@ -65,7 +65,6 @@ public class ClientDataDB implements java.io.Serializable {
 	
 
 	// Store (save) data to file
-	@SuppressWarnings("unchecked")
 	public void saveData() {
 		try {
 			FileOutputStream dataFile = new FileOutputStream(filePath);
@@ -88,5 +87,9 @@ public class ClientDataDB implements java.io.Serializable {
 	// Setters / Getters
 	public ArrayList<Client> getClientDB(){
 		return clientData;
+	}
+	
+	public static ClientDataDB getInstance() {
+		return instance;
 	}
 }

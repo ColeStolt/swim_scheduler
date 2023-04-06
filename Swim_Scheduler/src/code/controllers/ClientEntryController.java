@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import code.customUI.MaskedTextField;
+import code.dataObjects.Client;
+import code.datapersistance_dao.ClientDataDB;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -31,7 +33,10 @@ import javafx.scene.layout.VBox;
  *
  */
 
+
 public class ClientEntryController {
+
+	ClientDataDB clientDB = ClientDataDB.getInstance();
 	
 	@FXML private BorderPane mainScenePane;
 	@FXML private Button cancelButton;
@@ -82,24 +87,16 @@ public class ClientEntryController {
 	
 	public void saveClient() {
 		
+		clientDB.getClientDB().add(new Client(nameField.getText(), phoneNumberField.getText(), addressField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+		clientDB.saveData();
+		
 		try {
-			BufferedWriter writeData = new BufferedWriter(new FileWriter("src\\data\\client.data", true));
-			writeData.write(nameField.getText() + "`"
-					+ phoneNumberField.getText() + "`"
-					+ addressField.getText() + "`"
-					+ parseData(kidsField.getText()) + "`"
-					+ instructorChoice.getValue() + "`"
-					+ parseData(numberOfLessonsField.getText()) + "`"
-					+ parseData(amountPerLessonField.getText()) + "`"
-					+ paidInFullRadio.isSelected() + "\n");
-			writeData.close();
 			mainScenePane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
 			mainScenePane.setBottom(null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public String parseData(String data) {

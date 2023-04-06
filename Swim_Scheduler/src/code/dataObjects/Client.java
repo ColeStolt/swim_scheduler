@@ -7,8 +7,12 @@ package code.dataObjects;
  * of a client such as name, phone number, etc... 
  */
 
-public class Client {
+public class Client implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6012455717038070211L;
 	// Data
 	private String clientName;
 	private String addressOfLessons;

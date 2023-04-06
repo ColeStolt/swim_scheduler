@@ -19,10 +19,9 @@ public class ClientSceneController {
 	@FXML BorderPane mainClientScenePane;
 	@FXML TextField clientSearchBar;
 	
-	private ClientDataDB clientData;
+	private ClientDataDB clientData = ClientDataDB.getInstance();
 	
 	public void initialize() {
-		clientData = new ClientDataDB("src\\data\\client.data");
 		
 		// init settings 
 		scrollPaneVBox.setFillWidth(true);
