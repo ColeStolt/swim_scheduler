@@ -2,8 +2,9 @@ package code.controllers;
 
 import java.io.IOException;
 
+import code.customUI.ClientCard;
 import code.datapersistance_dao.ClientDataDB;
-import code.services.ClientCard;
+import code.datapersistance_dao.MainScreenSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,9 @@ public class ClientSceneController {
 	
 	private ClientDataDB clientData = ClientDataDB.getInstance();
 	
+	// Main screen reference
+	MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	
 	public void initialize() {
 		
 		// init settings 
@@ -35,9 +39,9 @@ public class ClientSceneController {
 	
 	public void addButt(ActionEvent e) {
 		try {
-			mainClientScenePane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
-			mainClientScenePane.setBottom(null);
-			mainClientScenePane.setTop(null);
+			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
+			//mainClientScenePane.setBottom(null);
+			//mainClientScenePane.setTop(null);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import code.datapersistance_dao.MainScreenSingleton;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +34,9 @@ public class NavigationController {
 	@FXML private Label timeLabel;
 	@FXML private Label dateLabel;
 	
+	// Main screen reference
+	MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	
 	/**
 	 * No parameter function that initializes data before loading the FXML file.
 	 * @return void
@@ -40,6 +44,7 @@ public class NavigationController {
 	
 	public void initialize() {
 		initializeDateAndTime();
+		mainScreen.setPane(mainBorderPane);
 	}
 	
 	/**

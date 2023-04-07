@@ -1,8 +1,15 @@
-package code.services;
+package code.customUI;
+
+import java.io.IOException;
 
 import code.dataObjects.Client;
+import code.datapersistance_dao.ClientCardReferenceSingleton;
+import code.datapersistance_dao.MainScreenSingleton;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -23,6 +30,12 @@ public class ClientCard extends BorderPane{
 	
 	// Reference to client object
 	private Client clientReference;
+	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
+
+	// Need a reference to the main pane this
+	// class will change to the client entry scene
+	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	
 	
 	public ClientCard(Client clientReference) {
 		this.clientReference = clientReference;
@@ -38,6 +51,9 @@ public class ClientCard extends BorderPane{
 		this.setTop(topLabelBox());
 		this.setCenter(centerLabelContainer());
 		this.setBottom(cardBottomLabels());
+		
+		// Setting event handler
+		mouseEventHandlingSetup();
 		
 	}
 	
@@ -173,6 +189,20 @@ public class ClientCard extends BorderPane{
 		instructorFlow.getChildren().add(instructorLabel);
 		
 		return instructorFlow;
+	}
+	
+	private void mouseEventHandlingSetup () {
+		this.setOnMouseClicked((new EventHandler<MouseEvent>() { 
+			   public void handle(MouseEvent event) { 
+			      try {
+			    	  clientTempReference.setClientReference(clientReference);
+					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   } 
+			}));
 	}
 	
 	// Getters / Setters

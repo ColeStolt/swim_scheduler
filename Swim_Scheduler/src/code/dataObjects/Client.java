@@ -60,6 +60,17 @@ public class Client implements java.io.Serializable{
 		this.paidInFull = paidInFull;
 	}
 
+	// Called when edits to the prices have been made to the prices
+	public void updateTotal() {
+		// Checking for if kids are zero (zero means client is doing lessons)
+		if (this.numberOfKids == 0) {
+			this.totalAmountForLessons = numberOfLessons * amountPerLesson;
+		} else {
+			this.totalAmountForLessons = numberOfKids * numberOfLessons * amountPerLesson;
+		}
+	}
+	
+	
 	// Getters and Setters
 	
 	public String getClientName() {
