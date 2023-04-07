@@ -1,8 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/instructorSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="640.0" HBox.hgrow="ALWAYS">
+               <center>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <Label text="Instructors" textFill="#979797" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="58.0" />
+                     </font>
+                  </Label>
+               </top>
+               <bottom>
+                  <BorderPane prefHeight="80.0" prefWidth="829.0" BorderPane.alignment="CENTER">
+                     <center>
+                        <Button fx:id="addInstructorButton" contentDisplay="CENTER" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="525.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 25px;" styleClass="addInstructorButton" text="Add Instructor" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Calibri Bold" size="31.0" />
+                           </font>
+                        </Button>
+                     </center>
+                  </BorderPane>
+               </bottom>
+            </BorderPane>
+            <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="91.0" HBox.hgrow="ALWAYS">
+               <center>
+                  <VBox prefHeight="653.0" prefWidth="278.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <Label text="Clients" textFill="#979797" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="58.0" />
+                     </font>
+                  </Label>
+               </top>
+            </BorderPane>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

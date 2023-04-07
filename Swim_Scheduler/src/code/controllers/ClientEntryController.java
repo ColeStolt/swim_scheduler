@@ -21,7 +21,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -280,6 +279,10 @@ public class ClientEntryController {
 		
 		// Delete button handler
 		deleteButton.setOnAction((new EventHandler<ActionEvent>() { 
+			
+			// Temp client name in case of null client object
+			String tempName = clientTempReference.getClient().getClientName();
+			
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -287,7 +290,7 @@ public class ClientEntryController {
 					deleteClient();
 					clientDB.saveData();
 					Alert sceneAlert = new Alert(AlertType.INFORMATION);
-					sceneAlert.setContentText("Client " + clientTempReference.getClient().getClientName() + " has been successfully deleted.");
+					sceneAlert.setContentText("Client " + tempName + " has been successfully deleted.");
 					sceneAlert.show();
 					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
 				} catch (IOException e) {
@@ -300,16 +303,20 @@ public class ClientEntryController {
 		// Add button to hbox
 		buttonHBox.getChildren().add(deleteButton);
 		
+		
 	}
 	
 	// Deletes a client from the table
 	private void deleteClient() {
 		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
-			if(clientTempReference.getClient().getClientName().equals(clientDB.getClientDB().get(i).getClientName()) && clientTempReference.getClient().getPhoneNumber().equals(clientDB.getClientDB().get(i).getPhoneNumber())) {
+			if(clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
 				clientDB.getClientDB().remove(i);
 				break;
 			}
 		}
+		
+		// Set client to null for next iteration
+		clientTempReference.setClientReference(null);
 		
 	}
 	
@@ -319,7 +326,7 @@ public class ClientEntryController {
 	// From the field entries
 	private void findAndReplaceClient(){
 		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
-			if(clientTempReference.getClient().getClientName().equals(clientDB.getClientDB().get(i).getClientName()) && clientTempReference.getClient().getPhoneNumber().equals(clientDB.getClientDB().get(i).getPhoneNumber())) {
+			if(clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
 				clientDB.getClientDB().get(i).setClientName(nameField.getText());
 				clientDB.getClientDB().get(i).setPhoneNumber(phoneNumberField.getText());
 				clientDB.getClientDB().get(i).setAddressOfLessons(addressField.getText());

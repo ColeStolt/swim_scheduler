@@ -1,5 +1,7 @@
 package code.dataObjects;
 
+import java.util.UUID;
+
 /**
  * 
  * @author Cole Stoltz
@@ -25,6 +27,7 @@ public class Client implements java.io.Serializable{
 	private float totalAmountForLessons;
 	private boolean paidInFull;
 	
+	private final String clientID = UUID.randomUUID().toString();
 	// Data structure to hold schedule data
 	// Schedule object will be added for easier parsing
 	// private Schedule scheduleData;
@@ -143,6 +146,10 @@ public class Client implements java.io.Serializable{
 
 	public void setPaidInFull(boolean paidInFull) {
 		this.paidInFull = paidInFull;
+	}
+
+	public String getClientID() {
+		return clientID;
 	}
 	
 	

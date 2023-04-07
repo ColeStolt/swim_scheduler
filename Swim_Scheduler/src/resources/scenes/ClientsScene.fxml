@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -42,12 +41,12 @@
                <left>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <TextField fx:id="clientSearchBar" layoutX="14.0" layoutY="6.0" onKeyTyped="#updateClientList" promptText="Search...">
+                        <TextField fx:id="clientSearchBar" layoutX="14.0" layoutY="6.0" onKeyTyped="#updateClientList" prefHeight="40.0" prefWidth="324.0" promptText="Search...">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="Calibri Bold" size="21.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="TEXT" />
@@ -59,15 +58,7 @@
             </BorderPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <right>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ChoiceBox layoutX="36.0" layoutY="6.0" prefWidth="150.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ChoiceBox>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                </right>
             </BorderPane>
          </children>
