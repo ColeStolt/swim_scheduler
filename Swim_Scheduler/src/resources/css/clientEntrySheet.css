@@ -9,7 +9,11 @@
 }
 
 #saveButton:hover{
-	
+	-fx-background-color: #1f3f30;
+}
+
+#saveButton:pressed{
+	-fx-background-color: #4e6b5e;
 }
 
 #cancelButton {
@@ -100,4 +104,24 @@
 	-fx-border-color:  #343E47;
 	-fx-text-alignment: center;
 	-fx-border-width: 0px 0px 55px 0px;
+}
+
+#deleteButton {
+	-fx-background-color:  #c2722d;
+	-fx-border-radius: 10px;
+	-fx-background-radius: 10px;
+	-fx-cursor: hand;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-size: 31px;
+	-fx-font-weight: bold;
+}
+
+#deleteButton:hover{
+	-fx-background-color: #9b5b24;
+}
+
+#deleteButton:pressed{
+	-fx-background-color: #c88042;
+
 }

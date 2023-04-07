@@ -1,15 +1,17 @@
 package code.controllers;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
+import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
+import code.datapersistance_dao.MainScreenSingleton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -19,6 +21,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,12 +40,15 @@ import javafx.scene.layout.VBox;
 public class ClientEntryController {
 
 	ClientDataDB clientDB = ClientDataDB.getInstance();
+	MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 	
 	@FXML private BorderPane mainScenePane;
 	@FXML private Button cancelButton;
 	@FXML private Button saveButton;
 	@FXML private VBox clientInfoEntriesVBox;
 	@FXML private VBox clientLessonInfoEntryVBox;
+	@FXML private HBox buttonHBox;
 	
 	// Fields
 	private TextField nameField;
@@ -73,12 +79,19 @@ public class ClientEntryController {
 	public void initialize() {
 		instructorInfoSetup();
 		lessonInfoSetup();
+		if(clientTempReference.getClient() != null) {
+			populateEntries();
+			enableDeleteButton();
+		}  else {
+			
+		}
 	}
 	
 	public void cancelClientAdd() {
 		try {
-			mainScenePane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
-			mainScenePane.setBottom(null);
+			clientTempReference.setClientReference(null);
+			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+			//mainScenePane.setBottom(null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,12 +100,18 @@ public class ClientEntryController {
 	
 	public void saveClient() {
 		
-		clientDB.getClientDB().add(new Client(nameField.getText(), phoneNumberField.getText(), addressField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
-		clientDB.saveData();
+		if(clientTempReference.getClient() == null) {
+			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+			clientDB.saveData();
+		} else {
+			findAndReplaceClient();
+			clientTempReference.setClientReference(null);
+			clientDB.saveData();
+		}
 		
 		try {
-			mainScenePane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
-			mainScenePane.setBottom(null);
+			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+			//mainScenePane.setBottom(null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -233,4 +252,86 @@ public class ClientEntryController {
 		clientLessonInfoEntryVBox.getChildren().add(radioAndLabel);
 	}
 	
+	
+	// Fill the fields with data from the client object
+	// The client object comes from the client card 
+	// which is seen on the screen
+	private void populateEntries(){
+		nameField.setText(clientTempReference.getClient().getClientName());
+		phoneNumberField.setPlainText(clientTempReference.getClient().getPhoneNumber());
+		addressField.setText(clientTempReference.getClient().getAddressOfLessons());
+		kidsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfKids()));
+		instructorChoice.setValue(clientTempReference.getClient().getInstructor());
+		numberOfLessonsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfLessons()));
+		amountPerLessonField.setPlainText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
+		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
+	}
+	
+	private void enableDeleteButton() {
+		// Create button
+		Button deleteButton = new Button("Delete");
+		
+		// Button settings
+		deleteButton.setId("deleteButton");
+		deleteButton.setPrefHeight(52);
+		deleteButton.setPrefWidth(353);
+		deleteButton.setMinHeight(0);
+		deleteButton.setMinWidth(0);
+		
+		// Delete button handler
+		deleteButton.setOnAction((new EventHandler<ActionEvent>() { 
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					deleteClient();
+					clientDB.saveData();
+					Alert sceneAlert = new Alert(AlertType.INFORMATION);
+					sceneAlert.setContentText("Client " + clientTempReference.getClient().getClientName() + " has been successfully deleted.");
+					sceneAlert.show();
+					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+			}));
+		
+		// Add button to hbox
+		buttonHBox.getChildren().add(deleteButton);
+		
+	}
+	
+	// Deletes a client from the table
+	private void deleteClient() {
+		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
+			if(clientTempReference.getClient().getClientName().equals(clientDB.getClientDB().get(i).getClientName()) && clientTempReference.getClient().getPhoneNumber().equals(clientDB.getClientDB().get(i).getPhoneNumber())) {
+				clientDB.getClientDB().remove(i);
+				break;
+			}
+		}
+		
+	}
+	
+	
+	// Finds client by phone number and name
+	// Then replaces the object data in the array list with the data
+	// From the field entries
+	private void findAndReplaceClient(){
+		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
+			if(clientTempReference.getClient().getClientName().equals(clientDB.getClientDB().get(i).getClientName()) && clientTempReference.getClient().getPhoneNumber().equals(clientDB.getClientDB().get(i).getPhoneNumber())) {
+				clientDB.getClientDB().get(i).setClientName(nameField.getText());
+				clientDB.getClientDB().get(i).setPhoneNumber(phoneNumberField.getText());
+				clientDB.getClientDB().get(i).setAddressOfLessons(addressField.getText());
+				clientDB.getClientDB().get(i).setNumberOfKids(Short.parseShort(parseData(kidsField.getText())));
+				clientDB.getClientDB().get(i).setInstructor(instructorChoice.getValue());
+				clientDB.getClientDB().get(i).setNumberOfLessons(Short.parseShort(parseData(numberOfLessonsField.getText())));
+				clientDB.getClientDB().get(i).setAmountPerLesson(Float.parseFloat(parseData(amountPerLessonField.getText())));
+				clientDB.getClientDB().get(i).setPaidInFull(paidInFullRadio.isSelected());
+				clientDB.getClientDB().get(i).updateTotal();
+				break;
+			}
+		}
+		
+	}
 }
