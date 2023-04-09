@@ -7,14 +7,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/instructorSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/instructorSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.InstructorSceneController">
    <center>
       <HBox minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="640.0" HBox.hgrow="ALWAYS">
                <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER" />
+                  <VBox fx:id="instrucorListVBox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <Label text="Instructors" textFill="#979797" BorderPane.alignment="CENTER">
