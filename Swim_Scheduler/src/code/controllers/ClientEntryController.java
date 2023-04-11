@@ -9,6 +9,7 @@ import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
+import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,9 +39,10 @@ import javafx.scene.layout.VBox;
 
 public class ClientEntryController {
 
-	ClientDataDB clientDB = ClientDataDB.getInstance();
-	MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	private ClientDataDB clientDB = ClientDataDB.getInstance();
+	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
+	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
 	
 	@FXML private BorderPane mainScenePane;
 	@FXML private Button cancelButton;
@@ -125,25 +127,11 @@ public class ClientEntryController {
 	}
 	
 	public void populateChoiceBox(ChoiceBox<String> choiceBox) {
-		try {
-				BufferedReader dataFile = new BufferedReader(new FileReader("src\\data\\instructorNames.data"));
-				String dataLine;
-				while((dataLine = dataFile.readLine()) != null) {
-					choiceBox.getItems().add(dataLine);
-			}
-			
-			dataFile.close();
-			
-		} catch (FileNotFoundException e) {
-			// Show error to user if file is not located
-			Alert sceneAlert = new Alert(AlertType.ERROR);
-			sceneAlert.setContentText("Could not load the \"instructorNames.data\" file.\nContact the developer about this issue.");
-			sceneAlert.show();
-		} catch (IOException e) {
-			Alert sceneAlert = new Alert(AlertType.ERROR);
-			sceneAlert.setContentText("Could not parse data file in \"instructorNames \".\nContact the developer about this issue.");
-			sceneAlert.show();
+		
+		for(int i = 0; i < instructorDB.getInstructorDB().size(); i++) {
+			choiceBox.getItems().add(instructorDB.getInstructorDB().get(i).getInstructorName());
 		}
+
 	}
 	
 	public void instructorInfoSetup() {
@@ -218,8 +206,8 @@ public class ClientEntryController {
 		
 		// Choicebox settings
 		instructorChoice.setId("choiceBox");
-		instructorChoice.setValue("Niko");
 		populateChoiceBox(instructorChoice);
+		instructorChoice.getSelectionModel().selectFirst();
 		
 		// Field settings
 		numberOfLessonsField.setId("fields");

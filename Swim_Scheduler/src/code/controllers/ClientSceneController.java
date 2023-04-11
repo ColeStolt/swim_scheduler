@@ -40,8 +40,6 @@ public class ClientSceneController {
 	public void addButt(ActionEvent e) {
 		try {
 			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
-			//mainClientScenePane.setBottom(null);
-			//mainClientScenePane.setTop(null);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

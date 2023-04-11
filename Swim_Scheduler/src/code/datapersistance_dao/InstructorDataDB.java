@@ -33,7 +33,6 @@ public class InstructorDataDB implements java.io.Serializable{
 	
 	// Constructor
 	private InstructorDataDB() {
-		saveData();
 		readAndFill();
 	}
 	
