@@ -1,15 +1,19 @@
 package code.customUI;
 
+
 import java.io.IOException;
 
 import code.dataObjects.Instructor;
+import code.datapersistance_dao.InstructorCardReferenceSingleton;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class InstructorCard extends BorderPane{
 	
@@ -17,7 +21,7 @@ public class InstructorCard extends BorderPane{
 	// private 
 	
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
-	
+	private InstructorCardReferenceSingleton instructorTempReference = InstructorCardReferenceSingleton.getInstance();
 	
 	public InstructorCard(Instructor instructorReference) {
 		this.instructorReference = instructorReference;
@@ -25,6 +29,7 @@ public class InstructorCard extends BorderPane{
 	}
 	
 	private void setup() {
+		mouseEventHandlingSetup();
 		this.setId("instructorCard");
 		this.setMaxWidth(Double.MAX_VALUE);
 		this.setTop(topLabelBox());
@@ -44,9 +49,8 @@ public class InstructorCard extends BorderPane{
 		
 		// Pane properties
 		namePane.setId("nameContainer");
+		namePane.setCenter(nameLabel);
 		
-		// Adding to pane
-		namePane.getChildren().add(nameLabel);
 		
 		return namePane;
 	}
@@ -67,12 +71,17 @@ public class InstructorCard extends BorderPane{
 		Label instructorPhoneNumberBottom = new Label("PHONE NUMBER");
 		
 		// Label settings
+		BorderPane.setAlignment(instructorEmailBottom, Pos.CENTER);
+		BorderPane.setAlignment(instructorPhoneNumberBottom, Pos.CENTER);
 		instructorEmailTop.setId("topLabels");
 		instructorEmailBottom.setId("bottomLabels");
 		instructorPhoneNumberTop.setId("topLabels");
 		instructorPhoneNumberBottom.setId("bottomLabels");
 		
 		// Pane settings
+		GridPane.setHgrow(emailPane, Priority.ALWAYS);
+		GridPane.setHgrow(phonePane, Priority.ALWAYS);
+		
 		emailPane.setCenter(instructorEmailTop);
 		emailPane.setBottom(instructorEmailBottom);
 		phonePane.setCenter(instructorPhoneNumberTop);
@@ -87,6 +96,20 @@ public class InstructorCard extends BorderPane{
 		centerLabels.getChildren().add(phonePane);
 		
 		return centerLabels;	
+	}
+	
+	private void mouseEventHandlingSetup () {
+		this.setOnMouseClicked((new EventHandler<MouseEvent>() { 
+			   public void handle(MouseEvent event) { 
+			      try {
+			    	  instructorTempReference.setInstructorReference(instructorReference);
+					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/InstructorDataFieldsScene.fxml")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   } 
+			}));
 	}
 	
 }
