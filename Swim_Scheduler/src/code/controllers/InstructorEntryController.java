@@ -69,14 +69,18 @@ public class InstructorEntryController {
 		nameLabel.setId("labels");
 		emailLabel = new Label("Instructor Email:");
 		emailLabel.setId("labels");
+		phoneLabel = new Label("Instructor Phone Number:");
+		phoneLabel.setId("labels");
 		
 		// Pane settings
+		BorderPane.setAlignment(phoneLabel, Pos.CENTER_LEFT);
 		BorderPane.setAlignment(nameLabel, Pos.CENTER_LEFT);
 		BorderPane.setAlignment(emailLabel, Pos.CENTER_LEFT);
 		
 		// Adding to pane
 		namePane.setTop(nameLabel);
 		emailPane.setTop(emailLabel);
+		phonePane.setTop(phoneLabel);
 		
 	}
 	
