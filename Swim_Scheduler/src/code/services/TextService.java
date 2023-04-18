@@ -10,8 +10,8 @@ public class TextService implements java.io.Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -1923331596655919604L;
-	public static final String ACCOUNT_SID = "AC6014142e620c2d4826f3320b5d8cf637";
-	  public static final String AUTH_TOKEN = "551cd8c6a6c96f19b4efd2ad3be03fe2";
+	public static final String ACCOUNT_SID = "none";
+	  public static final String AUTH_TOKEN = "none";
 	
 	public static void sendText(String fromNumber, String toNumber) {
 		  // Find your Account Sid and Token at twilio.com/console
