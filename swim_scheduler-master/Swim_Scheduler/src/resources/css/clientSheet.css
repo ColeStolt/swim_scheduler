@@ -1,0 +1,88 @@
+#addClientButton{
+    -fx-background-color: #16324B;
+}
+
+#addClientButton:hover {
+    -fx-background-color:  #244561;
+}
+
+#addClientButton:pressed{
+    -fx-background-color: rgb(22, 47, 67);
+}
+
+#centerAnchorPane {
+    -fx-background-color: #343E47;
+}
+
+#scrollPane > .corner {
+	-fx-background-color:  #343E47;
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track{
+	-fx-background-color:  #212121;
+	-fx-max-width: 1px;
+}
+
+.increment-button,
+.decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.increment-arrow,
+.decrement-arrow {
+	-fx-background-color: transparent;
+}
+
+#topLabelsContainer {
+	-fx-background-color: #183147;
+	-fx-border-color: #183147;
+	-fx-border-radius: 25px;
+	-fx-background-radius: 25px;
+}
+
+#mainCardPane{
+	-fx-border-width: 10px;
+	-fx-border-color: #242B32;
+	-fx-background-color: #242B32;
+	-fx-font-size: 35;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+}
+
+#mainCardPane:hover{
+	-fx-background-color: #17324a;
+	-fx-border-color: #17324a;
+	-fx-cursor: hand;
+}
+
+#mainCardPane:pressed{
+	-fx-background-color: #1f4a70;
+	-fx-border-color: #1f4a70;
+}
+
+#phoneAndAddress{
+	-fx-text-fill: #8A8A8A;
+	-fx-font-size: 25;
+}
+
+#cardBottomLabels{
+	-fx-border-color: transparent;
+	-fx-background-color: transparent;
+	-fx-padding: 10px 0 0 0;
+	-fx-font-size: 20;
+}
+
+
+#instructorLabel{
+	-fx-padding: 3px 3px 3px 3px;
+	-fx-text-fill: #ffffff;
+	-fx-border-color: #ffffff;
+}
+
+#bottomLabels{
+	-fx-font-size: 20;
+	-fx-text-fill: #8A8A8A;
+}
+

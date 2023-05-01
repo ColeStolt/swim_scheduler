@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/InstructorEntrySheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.InstructorEntryController">
+   <bottom>
+      <HBox fx:id="buttonHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="saveButton" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#addInstructor" prefHeight="52.0" prefWidth="349.0" style="-fx-border-width: 0;" styleClass="bottomButtons" stylesheets="@../css/clientEntrySheet.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="31.0" />
+               </font>
+            </Button>
+            <Button id="cancelButton" mnemonicParsing="false" onAction="#cancelAdd" prefHeight="52.0" prefWidth="353.0" styleClass="bottomButtons" stylesheets="@../css/clientEntrySheet.css" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="31.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox prefHeight="480.0" prefWidth="1109.0" spacing="50.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane fx:id="namePane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <center>
+                  <TextField fx:id="nameField" minHeight="0.0" minWidth="0.0" prefHeight="79.0" prefWidth="689.0" styleClass="fieldInputs" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="100.0" right="100.0" />
+                     </BorderPane.margin>
+                  </TextField>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="emailPane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <center>
+                  <TextField fx:id="emailField" minHeight="0.0" minWidth="0.0" prefHeight="79.0" prefWidth="689.0" styleClass="fieldInputs" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="100.0" right="100.0" />
+                     </BorderPane.margin>
+                  </TextField>
+               </center>
+            </BorderPane>
+            <BorderPane fx:id="phonePane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

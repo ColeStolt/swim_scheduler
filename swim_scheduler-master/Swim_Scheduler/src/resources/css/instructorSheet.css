@@ -1,0 +1,53 @@
+#addInstructorButton {
+    -fx-background-color: #16324B;
+}
+
+#addInstructorButton:hover {
+    -fx-background-color:  #244561;
+}
+
+#addInstructorButton:pressed{
+    -fx-background-color: rgb(22, 47, 67);
+}
+
+#instructorCard{
+	-fx-border-width: 10px;
+	-fx-border-color: #242B32;
+	-fx-background-color: #242B32;
+	-fx-font-size: 35;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+}
+
+#instructorCard:hover{
+	-fx-background-color: #17324a;
+	-fx-border-color: #17324a;
+	-fx-cursor: hand;
+}
+
+#instructorCard:pressed{
+	-fx-background-color: #1f4a70;
+	-fx-border-color: #1f4a70;
+}
+
+
+#instructorCard {
+	-fx-border-width: 10px;
+	-fx-border-color: #242B32;
+	-fx-background-color: #242B32;
+	-fx-font-size: 35;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+}
+
+#bottomLabels{
+	-fx-font-size: 20;
+	-fx-text-fill: #8A8A8A;
+}
+
+#nameContainer {
+	-fx-background-color: #183147;
+	-fx-border-color: #183147;
+	-fx-border-radius: 25px;
+	-fx-background-radius: 25px;
+}
