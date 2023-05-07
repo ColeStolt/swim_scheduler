@@ -1,8 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/scheduleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.ScheduleController">
+   <center>
+      <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="1085.0" style="-fx-background-color: #343E47; -fx-border-colo: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER">
+         <center>
+            <HBox minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="1109.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="mondayLabel1" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="sundayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Sunday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="mondayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="mondayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Monday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="tuesdayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="tuesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Tuesday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="wednesdayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="wednesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" prefWidth="131.0" styleClass="dayButtons" text="Wednesday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="thursdayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="thursdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Thursday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="fridayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="fridayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Friday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="saturdayLabel" minHeight="0.0" minWidth="0.0" styleClass="dateLabels" text="Label" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Calibri Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="saturdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Saturday">
+                           <font>
+                              <Font name="Calibri Bold" size="21.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+         <top>
+            <HBox alignment="BOTTOM_CENTER" minHeight="0.0" minWidth="0.0" prefHeight="127.0" prefWidth="1089.0" spacing="50.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="backButton" mnemonicParsing="false" style="-fx-background-color: #242B32;" styleClass="weekButtons">
+                     <font>
+                        <Font name="Calibri Bold" size="23.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/leftArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label fx:id="monthLabel" styleClass="monthLabel" text="Label" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="38.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="forwardButton" mnemonicParsing="false" style="-fx-background-color: #242B32;" styleClass="weekButtons">
+                     <font>
+                        <Font name="Calibri Bold" size="23.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/rightArrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </top>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <bottom>
+            <HBox prefHeight="248.0" prefWidth="1089.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Time of Lessons:" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="timeHBox" prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Repeat For:" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <ComboBox id="repeatCombobox" fx:id="repeatComboBox" prefHeight="41.0" prefWidth="205.0" stylesheets="@../css/scheduleSheet.css" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="114.0" prefWidth="1109.0" spacing="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="sendSaveButton" fx:id="sendSaveButton" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#sendAndSaveSchedule" prefHeight="65.0" prefWidth="279.0" styleClass="bottomButtons" text="Send / Save">
+               <font>
+                  <Font name="Calibri Bold" size="26.0" />
+               </font>
+            </Button>
+            <Button id="cancelButton" fx:id="cancelButton" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="279.0" styleClass="bottomButtons" text="Cancel">
+               <font>
+                  <Font name="Calibri Bold" size="26.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <Label fx:id="clientName" text="Label" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Calibri Bold" size="61.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>

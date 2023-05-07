@@ -7,6 +7,7 @@ import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
+import code.services.TextService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -100,6 +101,9 @@ public class ClientEntryController {
 		if(clientTempReference.getClient() == null) {
 			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
 			clientDB.saveData();
+			if(paidInFullRadio.isSelected() == true) {
+				TextService.sendText(phoneNumberField.getText(), "We're so excited have you start with us " + nameField.getText() + ".\nYour lessons start soon and we can't wait to see you!" );
+			}
 		} else {
 			findAndReplaceClient();
 			clientTempReference.setClientReference(null);
@@ -113,6 +117,7 @@ public class ClientEntryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public String parseData(String data) {

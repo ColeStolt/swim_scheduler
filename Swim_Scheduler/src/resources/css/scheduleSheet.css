@@ -1,0 +1,70 @@
+.bottomButtons {
+	-fx-border-radius: 10px;
+	-fx-background-radius: 10px;
+	-fx-cursor: hand;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-size: 31px;
+	-fx-font-weight: bold;
+}
+
+.dayButtons {
+	-fx-background-color: #738a9e;
+	-fx-cursor: hand;
+}
+
+.dayButtons:hover {
+	-fx-background-color: #5d6f80;
+}
+
+.dayButtons:pressed {
+	-fx-background-color: #829cb3;
+}
+
+#cancelButton {
+	-fx-background-color:  #442727;
+}
+
+#cancelButton:hover{
+	-fx-background-color: #361A1A;
+}
+
+#cancelButton:pressed{
+	-fx-background-color: #422020;
+}
+
+#sendSaveButton{
+	-fx-background-color:  #234736;	
+}
+
+#sendSaveButton:hover{
+	-fx-background-color: #1f3f30;
+}
+
+#sendSaveButton:pressed{
+	-fx-background-color: #4e6b5e;
+}
+
+#repeatCombobox {
+	-fx-border-color:  #343E47;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+	-fx-mark-color: #ffffff;
+}
+
+#repeatCombobox > .label{
+	-fx-text-fill: #ffffff;
+	-fx-background-color: #242B32;
+}
+
+#repeatCombobox > .context-menu {
+  -fx-background-color: #242B32;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box > .list-cell {
+-fx-background-color: #242B32;
+-fx-text-fill: #ffffff;
+}
