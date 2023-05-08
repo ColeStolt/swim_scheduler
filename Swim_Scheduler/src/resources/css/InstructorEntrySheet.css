@@ -10,7 +10,7 @@
 
 #phoneField {
 	-fx-border-color:  #343E47;
-	-fx-border-width: 0 10px 10px 10px;
+	-fx-border-width: 0px;
 	-fx-text-fill: #ffffff;
 	-fx-font-family: Calibri;
 	-fx-font-weight: bold;

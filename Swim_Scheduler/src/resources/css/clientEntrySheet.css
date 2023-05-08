@@ -59,12 +59,31 @@
 
 #choiceBox {
 	-fx-border-color:  #343E47;
-	-fx-border-width: 0 10px 10px 10px;
+	-fx-border-width: 0px 0px 10px 10px;
 	-fx-font-family: Calibri;
 	-fx-font-weight: bold;
 	-fx-font-size: 25px;
 	-fx-background-color: #242B32;
 	-fx-mark-color: #ffffff;
+}
+
+#addButton {
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0px 0px 10px 10px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+	-fx-cursor: hand;
+	-fx-text-fill: #ffffff;
+}
+
+#addButton:hover {
+	-fx-background-color: #293138
+}
+
+#addButton:pressed{
+	-fx-background-color: #43505c
 }
 
 #choiceBox .label{
@@ -125,3 +144,4 @@
 	-fx-background-color: #c88042;
 
 }
+

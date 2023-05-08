@@ -1,12 +1,17 @@
 package code.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
+import code.dataObjects.Instructor;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -52,14 +58,18 @@ public class ClientEntryController {
 	private MaskedTextField phoneNumberField;
 	private TextField addressField;
 	private MaskedTextField kidsField;
-	private ChoiceBox<String> instructorChoice;
+	private ChoiceBox<Instructor> instructorChoice;
 	private MaskedTextField numberOfLessonsField;
 	private MaskedTextField amountPerLessonField;
 	private RadioButton paidInFullRadio;
 	
+	// List of comboBoxes for getting all instructors
+	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
+	
 	// Panes
-	HBox radioAndLabel;
-	BorderPane titlePane;
+	private HBox radioAndLabel;
+	private BorderPane titlePane;
+	private HBox instructorsAdditionHBox;
 	
 	// Labels
 	private Label nameLabel;
@@ -73,7 +83,16 @@ public class ClientEntryController {
 	private Label clientInfoTitle;
 	private Label lessonInfoTitle;
 	
+	// Counter for max instructors
+	private int instructorMax = 0;
+	
+	// Buttons
+	private Button addInstructorButton;
+	private Button removeInstructorButton;
+	
 	public void initialize() {
+		instructorChoiceBoxes = new ArrayList<ChoiceBox<Instructor>>(); // This first so it can be edited
+		
 		instructorInfoSetup();
 		lessonInfoSetup();
 		if(clientTempReference.getClient() != null) {
@@ -97,22 +116,38 @@ public class ClientEntryController {
 	
 	public void saveClient() {
 		
-		if(clientTempReference.getClient() == null) {
-			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
-			clientDB.saveData();
-		} else {
-			findAndReplaceClient();
-			clientTempReference.setClientReference(null);
-			clientDB.saveData();
+		if(instructorDB.getInstructorDB().size() > 0) {
+			// Populate an instructor arraylist to add to a client ----
+			ArrayList<Instructor> tempList = new ArrayList<Instructor>();
+			for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
+				tempList.add(instructorChoiceBoxes.get(i).getValue());
+			}
+			// Garbage collection should be able to handle this
+			// -------
+		
+			if(clientTempReference.getClient() == null) {
+				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+				clientDB.saveData();
+			} else {
+				findAndReplaceClient();
+				clientTempReference.setClientReference(null);
+				clientDB.saveData();
+			}
+		
+			try {
+				mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+				//mainScenePane.setBottom(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			Alert sceneAlert = new Alert(AlertType.INFORMATION);
+			sceneAlert.setContentText("Need to have at least one instructor assigned.");
+			sceneAlert.show();
 		}
 		
-		try {
-			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
-			//mainScenePane.setBottom(null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public String parseData(String data) {
@@ -122,11 +157,10 @@ public class ClientEntryController {
 		return data;
 	}
 	
-	public void populateChoiceBox(ChoiceBox<String> choiceBox) {
+	public void populateChoiceBox(ChoiceBox<Instructor> choiceBox) {
 		
-		for(int i = 0; i < instructorDB.getInstructorDB().size(); i++) {
-			choiceBox.getItems().add(instructorDB.getInstructorDB().get(i).getInstructorName());
-		}
+		ObservableList<Instructor> items = FXCollections.observableArrayList(instructorDB.getInstructorDB());
+		choiceBox.setItems(items);
 
 	}
 	
@@ -180,11 +214,12 @@ public class ClientEntryController {
 	
 	public void lessonInfoSetup() {
 		// Declare Fields
-		instructorChoice = new ChoiceBox<String>();
+		instructorChoice = new ChoiceBox<Instructor>();
 		numberOfLessonsField = new MaskedTextField("##", '-');
 		amountPerLessonField = new MaskedTextField("$###.00", '-');
 		paidInFullRadio = new RadioButton();
-	
+		addInstructorButton = new Button("+");
+		removeInstructorButton = new Button("-");
 		
 		// Declare Labels
 		instructorLabel = new Label("Instructor:");
@@ -203,6 +238,7 @@ public class ClientEntryController {
 		// Choicebox settings
 		instructorChoice.setId("choiceBox");
 		populateChoiceBox(instructorChoice);
+		instructorChoiceBoxes.add(instructorChoice);
 		instructorChoice.getSelectionModel().selectFirst();
 		
 		// Field settings
@@ -212,22 +248,32 @@ public class ClientEntryController {
 		// Radio settings
 		paidInFullRadio.setId("radioButton");
 		
+		// Button Settings
+		addInstructorButton.setId("addButton");
+		removeInstructorButton.setId("addButton"); // same css id for same style
+		
 		// Declare Panes
 		radioAndLabel = new HBox();
+		instructorsAdditionHBox = new HBox();
 		titlePane = new BorderPane();
 		
 		// Pane settings
 		titlePane.setId("titlePane");
+		addInstructorButton(addInstructorButton, instructorsAdditionHBox);
+		removeInstructorButton(removeInstructorButton, instructorsAdditionHBox);
 		
 		// Add to panes
 		radioAndLabel.getChildren().add(paidInFullLabel);
 		radioAndLabel.getChildren().add(paidInFullRadio);
 		titlePane.setCenter(lessonInfoTitle);
+		instructorsAdditionHBox.getChildren().add(instructorChoice);
+		instructorsAdditionHBox.getChildren().add(addInstructorButton);
+		instructorsAdditionHBox.getChildren().add(removeInstructorButton);
 		
 		// Add to vbox
 		clientLessonInfoEntryVBox.getChildren().add(titlePane);
 		clientLessonInfoEntryVBox.getChildren().add(instructorLabel);
-		clientLessonInfoEntryVBox.getChildren().add(instructorChoice);
+		clientLessonInfoEntryVBox.getChildren().add(instructorsAdditionHBox);
 		clientLessonInfoEntryVBox.getChildren().add(numberOfLessonsLabel);
 		clientLessonInfoEntryVBox.getChildren().add(numberOfLessonsField);
 		clientLessonInfoEntryVBox.getChildren().add(amountPerLessonLabel);
@@ -240,11 +286,27 @@ public class ClientEntryController {
 	// The client object comes from the client card 
 	// which is seen on the screen
 	private void populateEntries(){
+		
+		// Get size of instructor array
+		// Create choice box for each
+		// Set appropriate value
+		if(clientTempReference.getClient().getInstructor().size() > 1)	{
+			for(int i = 1; i < clientTempReference.getClient().getInstructor().size(); i++) {
+				ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
+				instructorChoice.setId("choiceBox");
+				populateChoiceBox(instructorChoice);
+				instructorChoice.setValue(clientTempReference.getClient().getInstructor().get(i));
+				instructorChoiceBoxes.add(instructorChoice);
+				instructorsAdditionHBox.getChildren().add(instructorsAdditionHBox.getChildren().size()-2, instructorChoice);
+				instructorMax++;
+			}
+		}
+		
+		
 		nameField.setText(clientTempReference.getClient().getClientName());
 		phoneNumberField.setPlainText(clientTempReference.getClient().getPhoneNumber());
 		addressField.setText(clientTempReference.getClient().getAddressOfLessons());
 		kidsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfKids()));
-		instructorChoice.setValue(clientTempReference.getClient().getInstructor());
 		numberOfLessonsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfLessons()));
 		amountPerLessonField.setPlainText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
 		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
@@ -290,6 +352,46 @@ public class ClientEntryController {
 		
 	}
 	
+	private void addInstructorButton(Button addInstructorButton, HBox instructorHBox) {
+		addInstructorButton.setOnAction((new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(instructorMax < 3) {
+					ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
+					instructorChoice.setId("choiceBox");
+					populateChoiceBox(instructorChoice);
+					instructorChoice.setValue(instructorChoice.getItems().get(0));
+					instructorChoiceBoxes.add(instructorChoice);
+					instructorHBox.getChildren().add(instructorHBox.getChildren().size()-2, instructorChoice);
+					instructorMax++;
+				}else {
+					return;
+				}
+			} 
+			
+			}));
+	}
+	
+	private void removeInstructorButton(Button removeInstructorButton, HBox instructorHBox) {
+		removeInstructorButton.setOnAction((new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(instructorMax > 0) {
+					instructorChoiceBoxes.remove(instructorChoiceBoxes.get(instructorChoiceBoxes.size()-1));
+					instructorHBox.getChildren().remove(instructorHBox.getChildren().size()-3);
+					instructorMax--;
+				}else {
+					return;
+				}
+			} 
+			
+			}));
+	}
+	
 	// Deletes a client from the table
 	private void deleteClient() {
 		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
@@ -305,7 +407,7 @@ public class ClientEntryController {
 	}
 	
 	
-	// Finds client by phone number and name
+	// Finds client by ID number and name
 	// Then replaces the object data in the array list with the data
 	// From the field entries
 	private void findAndReplaceClient(){
@@ -315,7 +417,16 @@ public class ClientEntryController {
 				clientDB.getClientDB().get(i).setPhoneNumber(phoneNumberField.getText());
 				clientDB.getClientDB().get(i).setAddressOfLessons(addressField.getText());
 				clientDB.getClientDB().get(i).setNumberOfKids(Short.parseShort(parseData(kidsField.getText())));
-				clientDB.getClientDB().get(i).setInstructor(instructorChoice.getValue());
+				
+				// Populate an instructor arraylist to add to a client ----
+				ArrayList<Instructor> tempList = new ArrayList<Instructor>();
+				for(int j = 0; j < instructorChoiceBoxes.size(); j++) {
+					tempList.add(instructorChoiceBoxes.get(j).getValue());
+				}
+				// Garbage collection should be able to handle this
+				// -------
+				
+				clientDB.getClientDB().get(i).setInstructor(tempList);
 				clientDB.getClientDB().get(i).setNumberOfLessons(Short.parseShort(parseData(numberOfLessonsField.getText())));
 				clientDB.getClientDB().get(i).setAmountPerLesson(Float.parseFloat(parseData(amountPerLessonField.getText())));
 				clientDB.getClientDB().get(i).setPaidInFull(paidInFullRadio.isSelected());

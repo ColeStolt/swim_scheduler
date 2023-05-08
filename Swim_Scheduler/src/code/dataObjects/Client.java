@@ -1,5 +1,6 @@
 package code.dataObjects;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -21,11 +22,12 @@ public class Client implements java.io.Serializable{
 	private String phoneNumber;
 	private short numberOfKids;
 	// instructor may be changed to an instructor object
-	private String instructor;
+	private ArrayList<Instructor> instructor;
 	private short numberOfLessons;
 	private float amountPerLesson;
 	private float totalAmountForLessons;
 	private boolean paidInFull;
+	private boolean scheduled;
 	
 	private final String clientID = UUID.randomUUID().toString();
 	// Data structure to hold schedule data
@@ -37,14 +39,15 @@ public class Client implements java.io.Serializable{
 		addressOfLessons = "null";
 		phoneNumber = "null";
 		numberOfKids = 0;
-		instructor = "null";
+		instructor = null;
 		numberOfLessons = 0;
 		amountPerLesson = 0f;
 		totalAmountForLessons = 0f;
 		paidInFull = false;
+		scheduled = false;
 	}
 	
-	public Client(String clientName, String addressOfLessons, String phoneNumber, short numberOfKids, String instructor, short numberOfLessons, float amountPerLesson, boolean paidInFull) {
+	public Client(String clientName, String addressOfLessons, String phoneNumber, short numberOfKids, ArrayList<Instructor> instructor, short numberOfLessons, float amountPerLesson, boolean paidInFull) {
 		this.clientName = clientName;
 		this.addressOfLessons = addressOfLessons;
 		this.phoneNumber = phoneNumber;
@@ -61,6 +64,7 @@ public class Client implements java.io.Serializable{
 		}
 		
 		this.paidInFull = paidInFull;
+		scheduled = false;
 	}
 
 	// Called when edits to the prices have been made to the prices
@@ -92,7 +96,7 @@ public class Client implements java.io.Serializable{
 		return numberOfKids;
 	}
 
-	public String getInstructor() {
+	public ArrayList<Instructor> getInstructor() {
 		return instructor;
 	}
 
@@ -128,7 +132,7 @@ public class Client implements java.io.Serializable{
 		this.numberOfKids = numberOfKids;
 	}
 
-	public void setInstructor(String instructor) {
+	public void setInstructor(ArrayList<Instructor> instructor) {
 		this.instructor = instructor;
 	}
 
@@ -150,6 +154,14 @@ public class Client implements java.io.Serializable{
 
 	public String getClientID() {
 		return clientID;
+	}
+
+	public boolean isScheduled() {
+		return scheduled;
+	}
+
+	public void setScheduled(boolean scheduled) {
+		this.scheduled = scheduled;
 	}
 	
 	

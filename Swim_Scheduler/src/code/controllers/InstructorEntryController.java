@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import code.customUI.MaskedTextField;
 import code.dataObjects.Instructor;
+import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorCardReferenceSingleton;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
@@ -25,6 +26,7 @@ public class InstructorEntryController {
 	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private InstructorCardReferenceSingleton tempInstructor = InstructorCardReferenceSingleton.getInstance();
+	private ClientDataDB clientDB = ClientDataDB.getInstance();
 	
 	@FXML TextField nameField;
 	@FXML TextField emailField;
@@ -161,7 +163,19 @@ public class InstructorEntryController {
 	private void deleteInstructor() {
 		for(int i = 0; i < instructorDB.getInstructorDB().size(); i++) {
 			if(tempInstructor.getInstructor().getInstructorID() == instructorDB.getInstructorDB().get(i).getInstructorID()) {
+				
+				for(int j = 0; j < clientDB.getClientDB().size(); j++) {
+					for(int k = 0; k < clientDB.getClientDB().get(j).getInstructor().size(); k++) {
+						if(clientDB.getClientDB().get(j).getInstructor().get(k).getInstructorID() == instructorDB.getInstructorDB().get(i).getInstructorID()) {
+							clientDB.getClientDB().get(j).getInstructor().remove(k);
+						}
+					}
+				}
+				
+				clientDB.saveData();
 				instructorDB.getInstructorDB().remove(i);
+				
+				
 				break;
 			}
 		}

@@ -58,6 +58,11 @@ public class NavigationController {
 		
 		try {
 			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/HomeScene.fxml")));
+			homeButton.setStyle("-fx-background-color: #0f0f0f;"+
+			"-fx-underline: true;");
+			scheduleButton.setStyle("-fx-background-color: none;");
+			clientsButton.setStyle("-fx-background-color: none;");
+			instructorsButton.setStyle("-fx-background-color: none;");
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"home\" page.\nContact the developer about this issue.");
@@ -75,7 +80,12 @@ public class NavigationController {
 	public void switchToScheduleScene(ActionEvent e) {
 		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduleScene.fxml")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
+			homeButton.setStyle("-fx-background-color: none;");
+			scheduleButton.setStyle("-fx-background-color: #0f0f0f;"+
+					"-fx-underline: true;");
+			clientsButton.setStyle("-fx-background-color: none;");
+			instructorsButton.setStyle("-fx-background-color: none;");
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"schedule\" page.\nContact the developer about this issue.");
@@ -93,6 +103,11 @@ public class NavigationController {
 		
 		try {
 			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+			homeButton.setStyle("-fx-background-color: none;");
+			scheduleButton.setStyle("-fx-background-color: none;");
+			clientsButton.setStyle("-fx-background-color: #0f0f0f;"+
+					"-fx-underline: true;");
+			instructorsButton.setStyle("-fx-background-color: none;");
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"client\" page.\nContact the developer about this issue.");
@@ -110,6 +125,11 @@ public class NavigationController {
 		
 		try {
 			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/InstructorsScene.fxml")));
+			homeButton.setStyle("-fx-background-color: none;");
+			scheduleButton.setStyle("-fx-background-color: none;");
+			clientsButton.setStyle("-fx-background-color: none;");
+			instructorsButton.setStyle("-fx-background-color: #0f0f0f;"+
+					"-fx-underline: true;");
 		} catch (IOException e1) {
 			
 			Alert sceneAlert = new Alert(AlertType.ERROR);

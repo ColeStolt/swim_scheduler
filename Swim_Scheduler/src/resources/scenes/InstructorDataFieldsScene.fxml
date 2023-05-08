@@ -26,7 +26,7 @@
       </HBox>
    </bottom>
    <center>
-      <VBox prefHeight="480.0" prefWidth="1109.0" spacing="50.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="480.0" prefWidth="1109.0" style="-fx-background-color: #343E47; -fx-border-color: #212121; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER">
          <children>
             <BorderPane fx:id="namePane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <center>

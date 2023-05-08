@@ -51,9 +51,8 @@ public class ClientCard extends BorderPane{
 		this.setTop(topLabelBox());
 		this.setCenter(centerLabelContainer());
 		this.setBottom(cardBottomLabels());
-		
-		// Setting event handler
-		mouseEventHandlingSetup();
+			
+
 		
 	}
 	
@@ -181,26 +180,24 @@ public class ClientCard extends BorderPane{
 		FlowPane instructorFlow = new FlowPane();
 		
 		// Labels
-		Label instructorLabel = new Label(clientReference.getInstructor());
-		instructorLabel.setId("instructorLabel");
+		for(int i = 0; i < clientReference.getInstructor().size(); i++) {
+			Label instructorLabel = new Label(clientReference.getInstructor().get(i).getInstructorName());
+			instructorLabel.setId("instructorLabel");
+			
+			// Flow settings
+			instructorFlow.setId("cardBottomLabels");
+			instructorFlow.getChildren().add(instructorLabel);
+		}
 		
-		// Flow settings
-		instructorFlow.setId("cardBottomLabels");
-		instructorFlow.getChildren().add(instructorLabel);
 		
 		return instructorFlow;
 	}
 	
-	private void mouseEventHandlingSetup () {
+
+	private void scheduleHandlingSetup() {
 		this.setOnMouseClicked((new EventHandler<MouseEvent>() { 
 			   public void handle(MouseEvent event) { 
-			      try {
-			    	  clientTempReference.setClientReference(clientReference);
-					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				   System.out.println("Hello");
 			   } 
 			}));
 	}
@@ -213,5 +210,5 @@ public class ClientCard extends BorderPane{
 	public void setClientReference(Client clientReference) {
 		this.clientReference = clientReference;
 	}
-	
+
 }
