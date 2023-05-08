@@ -44,6 +44,7 @@ public class Client implements java.io.Serializable{
 		amountPerLesson = 0f;
 		totalAmountForLessons = 0f;
 		paidInFull = false;
+		scheduled = false;
 	}
 	
 	public Client(String clientName, String addressOfLessons, String phoneNumber, short numberOfKids, ArrayList<Instructor> instructor, short numberOfLessons, float amountPerLesson, boolean paidInFull) {
@@ -63,6 +64,7 @@ public class Client implements java.io.Serializable{
 		}
 		
 		this.paidInFull = paidInFull;
+		scheduled = false;
 	}
 
 	// Called when edits to the prices have been made to the prices

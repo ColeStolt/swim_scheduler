@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="code.controllers.ScheduleStatusController">
+<BorderPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/ScheduleStatusSheet.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="code.controllers.ScheduleStatusController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>

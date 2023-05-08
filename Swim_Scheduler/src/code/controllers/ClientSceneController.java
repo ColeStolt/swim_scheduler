@@ -3,13 +3,17 @@ package code.controllers;
 import java.io.IOException;
 
 import code.customUI.ClientCard;
+import code.dataObjects.Client;
+import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -23,7 +27,8 @@ public class ClientSceneController {
 	private ClientDataDB clientData = ClientDataDB.getInstance();
 	
 	// Main screen reference
-	MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 	
 	public void initialize() {
 		
@@ -32,7 +37,23 @@ public class ClientSceneController {
 		
 		// Iterate through list and add client card to screen
 		for(int i = 0; i < clientData.getClientDB().size(); i++) {
-			scrollPaneVBox.getChildren().add(new ClientCard(clientData.getClientDB().get(i)));
+			
+			ClientCard card = new ClientCard(clientData.getClientDB().get(i));
+			
+			card.setOnMouseClicked((new EventHandler<MouseEvent>() { 
+				   public void handle(MouseEvent event) { 
+				      try {
+				    	  clientTempReference.setClientReference(card.getClientReference());
+				    	 
+						mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   } 
+				}));
+			
+			scrollPaneVBox.getChildren().add(card);
 		}
 
 	}

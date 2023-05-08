@@ -14,15 +14,19 @@ public class ScheduleStatusController {
 	ClientDataDB clientsDB = ClientDataDB.getInstance();
 	
 	public void initialize() {
-		
+		populateSchedules();
 	}
 	
 	public void populateSchedules() {
 		for(int i = 0; i < clientsDB.getClientDB().size(); i++) {
 			if(clientsDB.getClientDB().get(i).isScheduled()) {
-				scheduledVBox.getChildren().add(new ClientCard(clientsDB.getClientDB().get(i)));
+				ClientCard scheduled = new ClientCard(clientsDB.getClientDB().get(i));
+				scheduled.setId("mainCardPane");
+				scheduledVBox.getChildren().add(scheduled);
 			} else {
-				unscheduledVBox.getChildren().add(new ClientCard(clientsDB.getClientDB().get(i)));
+				ClientCard scheduled = new ClientCard(clientsDB.getClientDB().get(i));
+				scheduled.setId("mainCardPane");
+				unscheduledVBox.getChildren().add(scheduled);
 			}
 		}
 	}

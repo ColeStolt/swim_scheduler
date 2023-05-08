@@ -1,0 +1,19 @@
+#mainCardPane{
+	-fx-border-width: 10px;
+	-fx-border-color: #242B32;
+	-fx-background-color: #242B32;
+	-fx-font-size: 20;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+}
+
+#mainCardPane:hover{
+	-fx-background-color: #17324a;
+	-fx-border-color: #17324a;
+	-fx-cursor: hand;
+}
+
+#mainCardPane:pressed{
+	-fx-background-color: #1f4a70;
+	-fx-border-color: #1f4a70;
+}

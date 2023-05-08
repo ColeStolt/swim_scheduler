@@ -45,7 +45,6 @@ public class ClientEntryController {
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
-	private Instructor tempInstructor;
 	
 	@FXML private BorderPane mainScenePane;
 	@FXML private Button cancelButton;
@@ -117,29 +116,36 @@ public class ClientEntryController {
 	
 	public void saveClient() {
 		
-		// Populate an instructor arraylist to add to a client ----
-		ArrayList<Instructor> tempList = new ArrayList<Instructor>();
-		for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
-			tempList.add(instructorChoiceBoxes.get(i).getValue());
-		}
-		// Garbage collection should be able to handle this
-		// -------
+		if(instructorDB.getInstructorDB().size() > 0) {
+			// Populate an instructor arraylist to add to a client ----
+			ArrayList<Instructor> tempList = new ArrayList<Instructor>();
+			for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
+				tempList.add(instructorChoiceBoxes.get(i).getValue());
+			}
+			// Garbage collection should be able to handle this
+			// -------
 		
-		if(clientTempReference.getClient() == null) {
-			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
-			clientDB.saveData();
-		} else {
-			findAndReplaceClient();
-			clientTempReference.setClientReference(null);
-			clientDB.saveData();
-		}
+			if(clientTempReference.getClient() == null) {
+				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+				clientDB.saveData();
+			} else {
+				findAndReplaceClient();
+				clientTempReference.setClientReference(null);
+				clientDB.saveData();
+			}
 		
-		try {
-			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
-			//mainScenePane.setBottom(null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+				//mainScenePane.setBottom(null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			Alert sceneAlert = new Alert(AlertType.INFORMATION);
+			sceneAlert.setContentText("Need to have at least one instructor assigned.");
+			sceneAlert.show();
 		}
 		
 	}
@@ -280,11 +286,27 @@ public class ClientEntryController {
 	// The client object comes from the client card 
 	// which is seen on the screen
 	private void populateEntries(){
+		
+		// Get size of instructor array
+		// Create choice box for each
+		// Set appropriate value
+		if(clientTempReference.getClient().getInstructor().size() > 1)	{
+			for(int i = 1; i < clientTempReference.getClient().getInstructor().size(); i++) {
+				ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
+				instructorChoice.setId("choiceBox");
+				populateChoiceBox(instructorChoice);
+				instructorChoice.setValue(clientTempReference.getClient().getInstructor().get(i));
+				instructorChoiceBoxes.add(instructorChoice);
+				instructorsAdditionHBox.getChildren().add(instructorsAdditionHBox.getChildren().size()-2, instructorChoice);
+				instructorMax++;
+			}
+		}
+		
+		
 		nameField.setText(clientTempReference.getClient().getClientName());
 		phoneNumberField.setPlainText(clientTempReference.getClient().getPhoneNumber());
 		addressField.setText(clientTempReference.getClient().getAddressOfLessons());
 		kidsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfKids()));
-		instructorChoice.setValue(clientTempReference.getClient().getInstructor());
 		numberOfLessonsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfLessons()));
 		amountPerLessonField.setPlainText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
 		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
@@ -340,10 +362,10 @@ public class ClientEntryController {
 					ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
 					instructorChoice.setId("choiceBox");
 					populateChoiceBox(instructorChoice);
+					instructorChoice.setValue(instructorChoice.getItems().get(0));
 					instructorChoiceBoxes.add(instructorChoice);
 					instructorHBox.getChildren().add(instructorHBox.getChildren().size()-2, instructorChoice);
 					instructorMax++;
-					System.out.println(instructorMax);
 				}else {
 					return;
 				}
@@ -360,10 +382,8 @@ public class ClientEntryController {
 				// TODO Auto-generated method stub
 				if(instructorMax > 0) {
 					instructorChoiceBoxes.remove(instructorChoiceBoxes.get(instructorChoiceBoxes.size()-1));
-					System.out.println(instructorChoiceBoxes.size() + " CHOICES");
 					instructorHBox.getChildren().remove(instructorHBox.getChildren().size()-3);
 					instructorMax--;
-					System.out.println(instructorMax);
 				}else {
 					return;
 				}
@@ -397,7 +417,16 @@ public class ClientEntryController {
 				clientDB.getClientDB().get(i).setPhoneNumber(phoneNumberField.getText());
 				clientDB.getClientDB().get(i).setAddressOfLessons(addressField.getText());
 				clientDB.getClientDB().get(i).setNumberOfKids(Short.parseShort(parseData(kidsField.getText())));
-				clientDB.getClientDB().get(i).setInstructor(instructorChoice.getValue());
+				
+				// Populate an instructor arraylist to add to a client ----
+				ArrayList<Instructor> tempList = new ArrayList<Instructor>();
+				for(int j = 0; j < instructorChoiceBoxes.size(); j++) {
+					tempList.add(instructorChoiceBoxes.get(j).getValue());
+				}
+				// Garbage collection should be able to handle this
+				// -------
+				
+				clientDB.getClientDB().get(i).setInstructor(tempList);
 				clientDB.getClientDB().get(i).setNumberOfLessons(Short.parseShort(parseData(numberOfLessonsField.getText())));
 				clientDB.getClientDB().get(i).setAmountPerLesson(Float.parseFloat(parseData(amountPerLessonField.getText())));
 				clientDB.getClientDB().get(i).setPaidInFull(paidInFullRadio.isSelected());

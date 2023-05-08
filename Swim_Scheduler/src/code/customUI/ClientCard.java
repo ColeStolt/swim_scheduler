@@ -51,9 +51,8 @@ public class ClientCard extends BorderPane{
 		this.setTop(topLabelBox());
 		this.setCenter(centerLabelContainer());
 		this.setBottom(cardBottomLabels());
-		
-		// Setting event handler
-		mouseEventHandlingSetup();
+			
+
 		
 	}
 	
@@ -194,16 +193,11 @@ public class ClientCard extends BorderPane{
 		return instructorFlow;
 	}
 	
-	private void mouseEventHandlingSetup () {
+
+	private void scheduleHandlingSetup() {
 		this.setOnMouseClicked((new EventHandler<MouseEvent>() { 
 			   public void handle(MouseEvent event) { 
-			      try {
-			    	  clientTempReference.setClientReference(clientReference);
-					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				   System.out.println("Hello");
 			   } 
 			}));
 	}
@@ -216,5 +210,5 @@ public class ClientCard extends BorderPane{
 	public void setClientReference(Client clientReference) {
 		this.clientReference = clientReference;
 	}
-	
+
 }
