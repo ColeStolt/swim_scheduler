@@ -75,7 +75,7 @@ public class NavigationController {
 	public void switchToScheduleScene(ActionEvent e) {
 		
 		try {
-			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduleScene.fxml")));
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
 		} catch (IOException e1) {
 			Alert sceneAlert = new Alert(AlertType.ERROR);
 			sceneAlert.setContentText("Could not load a scene file for the \"schedule\" page.\nContact the developer about this issue.");

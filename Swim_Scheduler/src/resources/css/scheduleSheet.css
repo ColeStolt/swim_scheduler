@@ -21,6 +21,115 @@
 	-fx-background-color: #829cb3;
 }
 
+.text-field {
+    -fx-alignment: center;   
+}
+
+.date-picker {
+  -fx-primary-color: #738a9e;
+  -fx-secondary-color: #5b6d7d;
+  -fx-light-grey-color: #d1d1d1;
+  /*Set focus color*/
+  -fx-focus-color: -fx-secondary-color;
+  /*Increase font size*/
+  -fx-font-size: 30px;
+}
+
+.date-picker .arrow-button {
+  -fx-background-color: -fx-primary-color;
+  -fx-background-radius: 0;
+}
+ 
+.date-picker .arrow-button:hover {
+  -fx-background-color: -fx-secondary-color;
+}
+ 
+.date-picker .arrow-button .arrow {
+  -fx-background-color: #ffffff;
+}
+ 
+.date-picker .cell {
+  -fx-background-color: white;
+}
+ 
+.date-picker .cell:hover {
+  -fx-background-color: -fx-primary-color;
+}
+ 
+.date-picker .cell:focused {
+  -fx-background-color: -fx-primary-color;
+}
+
+.date-picker .selected {
+  -fx-background-color: -fx-primary-color;
+  -fx-text-fill: #ffffff;
+}
+ 
+.date-picker .selected:focused {
+  -fx-background-color: -fx-primary-color;
+  -fx-text-fill: #ffffff;
+}
+ 
+.date-picker-popup {
+  -fx-border-color: transparent;
+}
+ 
+.date-picker-popup .month-year-pane {
+  -fx-background-color: -fx-primary-color;
+}
+ 
+.date-picker-popup .month-year-pane .label {
+  -fx-text-fill: #ffffff;
+}
+ 
+.date-picker-popup .week-number-cell {
+  -fx-text-fill: -fx-secondary-color;
+}
+ 
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+  -fx-background-color: #343e47;
+}
+
+#morningNoonComboBox {
+	-fx-border-width: 5px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 30px;
+	-fx-background-color: #242B32;
+	-fx-mark-color: #ffffff;
+}
+
+#morningNoonComboBox .label{
+	-fx-text-fill: #ffffff;
+	
+}
+
+#morningNoonComboBox .context-menu {
+    -fx-background-color: #343E47;
+}
+
+
+#timeField{
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0px 5px 0px 0px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 30px;
+	-fx-background-color: #242B32;
+}
+
+#startDatePicker {
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0px;
+	-fx-text-fill: #ffffff;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 30px;
+	-fx-background-color: #343E47;
+}
+
 #cancelButton {
 	-fx-background-color:  #442727;
 }

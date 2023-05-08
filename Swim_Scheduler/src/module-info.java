@@ -12,7 +12,8 @@ module Swim_Scheduler {
 	requires com.google.api.client.extensions.jetty.auth;
 	requires com.google.api.services.calendar;
 	requires google.http.client.jackson2;
-
+	requires jdk.httpserver;
+	requires java.base;
 
 
 	

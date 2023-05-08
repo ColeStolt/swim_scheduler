@@ -80,4 +80,9 @@ public class Instructor implements java.io.Serializable {
 		this.assignedClients = assignedClients;
 	}
 	
+    @Override
+    public String toString() {
+        return instructorName;
+    }
+	
 }

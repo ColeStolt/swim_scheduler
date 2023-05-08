@@ -1,13 +1,17 @@
 package code.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
+import code.dataObjects.Instructor;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
-import code.services.TextService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -40,6 +45,7 @@ public class ClientEntryController {
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
+	private Instructor tempInstructor;
 	
 	@FXML private BorderPane mainScenePane;
 	@FXML private Button cancelButton;
@@ -53,14 +59,18 @@ public class ClientEntryController {
 	private MaskedTextField phoneNumberField;
 	private TextField addressField;
 	private MaskedTextField kidsField;
-	private ChoiceBox<String> instructorChoice;
+	private ChoiceBox<Instructor> instructorChoice;
 	private MaskedTextField numberOfLessonsField;
 	private MaskedTextField amountPerLessonField;
 	private RadioButton paidInFullRadio;
 	
+	// List of comboBoxes for getting all instructors
+	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
+	
 	// Panes
-	HBox radioAndLabel;
-	BorderPane titlePane;
+	private HBox radioAndLabel;
+	private BorderPane titlePane;
+	private HBox instructorsAdditionHBox;
 	
 	// Labels
 	private Label nameLabel;
@@ -74,7 +84,16 @@ public class ClientEntryController {
 	private Label clientInfoTitle;
 	private Label lessonInfoTitle;
 	
+	// Counter for max instructors
+	private int instructorMax = 0;
+	
+	// Buttons
+	private Button addInstructorButton;
+	private Button removeInstructorButton;
+	
 	public void initialize() {
+		instructorChoiceBoxes = new ArrayList<ChoiceBox<Instructor>>(); // This first so it can be edited
+		
 		instructorInfoSetup();
 		lessonInfoSetup();
 		if(clientTempReference.getClient() != null) {
@@ -101,9 +120,6 @@ public class ClientEntryController {
 		if(clientTempReference.getClient() == null) {
 			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
 			clientDB.saveData();
-			if(paidInFullRadio.isSelected() == true) {
-				TextService.sendText(phoneNumberField.getText(), "We're so excited have you start with us " + nameField.getText() + ".\nYour lessons start soon and we can't wait to see you!" );
-			}
 		} else {
 			findAndReplaceClient();
 			clientTempReference.setClientReference(null);
@@ -127,11 +143,10 @@ public class ClientEntryController {
 		return data;
 	}
 	
-	public void populateChoiceBox(ChoiceBox<String> choiceBox) {
+	public void populateChoiceBox(ChoiceBox<Instructor> choiceBox) {
 		
-		for(int i = 0; i < instructorDB.getInstructorDB().size(); i++) {
-			choiceBox.getItems().add(instructorDB.getInstructorDB().get(i).getInstructorName());
-		}
+		ObservableList<Instructor> items = FXCollections.observableArrayList(instructorDB.getInstructorDB());
+		choiceBox.setItems(items);
 
 	}
 	
@@ -185,11 +200,12 @@ public class ClientEntryController {
 	
 	public void lessonInfoSetup() {
 		// Declare Fields
-		instructorChoice = new ChoiceBox<String>();
+		instructorChoice = new ChoiceBox<Instructor>();
 		numberOfLessonsField = new MaskedTextField("##", '-');
 		amountPerLessonField = new MaskedTextField("$###.00", '-');
 		paidInFullRadio = new RadioButton();
-	
+		addInstructorButton = new Button("+");
+		removeInstructorButton = new Button("-");
 		
 		// Declare Labels
 		instructorLabel = new Label("Instructor:");
@@ -208,6 +224,7 @@ public class ClientEntryController {
 		// Choicebox settings
 		instructorChoice.setId("choiceBox");
 		populateChoiceBox(instructorChoice);
+		instructorChoiceBoxes.add(instructorChoice);
 		instructorChoice.getSelectionModel().selectFirst();
 		
 		// Field settings
@@ -217,22 +234,32 @@ public class ClientEntryController {
 		// Radio settings
 		paidInFullRadio.setId("radioButton");
 		
+		// Button Settings
+		addInstructorButton.setId("addButton");
+		removeInstructorButton.setId("addButton"); // same css id for same style
+		
 		// Declare Panes
 		radioAndLabel = new HBox();
+		instructorsAdditionHBox = new HBox();
 		titlePane = new BorderPane();
 		
 		// Pane settings
 		titlePane.setId("titlePane");
+		addInstructorButton(addInstructorButton, instructorsAdditionHBox);
+		removeInstructorButton(removeInstructorButton, instructorsAdditionHBox);
 		
 		// Add to panes
 		radioAndLabel.getChildren().add(paidInFullLabel);
 		radioAndLabel.getChildren().add(paidInFullRadio);
 		titlePane.setCenter(lessonInfoTitle);
+		instructorsAdditionHBox.getChildren().add(instructorChoice);
+		instructorsAdditionHBox.getChildren().add(addInstructorButton);
+		instructorsAdditionHBox.getChildren().add(removeInstructorButton);
 		
 		// Add to vbox
 		clientLessonInfoEntryVBox.getChildren().add(titlePane);
 		clientLessonInfoEntryVBox.getChildren().add(instructorLabel);
-		clientLessonInfoEntryVBox.getChildren().add(instructorChoice);
+		clientLessonInfoEntryVBox.getChildren().add(instructorsAdditionHBox);
 		clientLessonInfoEntryVBox.getChildren().add(numberOfLessonsLabel);
 		clientLessonInfoEntryVBox.getChildren().add(numberOfLessonsField);
 		clientLessonInfoEntryVBox.getChildren().add(amountPerLessonLabel);
@@ -295,6 +322,48 @@ public class ClientEntryController {
 		
 	}
 	
+	private void addInstructorButton(Button addInstructorButton, HBox instructorHBox) {
+		addInstructorButton.setOnAction((new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(instructorMax < 3) {
+					ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
+					instructorChoice.setId("choiceBox");
+					populateChoiceBox(instructorChoice);
+					instructorChoiceBoxes.add(instructorChoice);
+					instructorHBox.getChildren().add(instructorHBox.getChildren().size()-2, instructorChoice);
+					instructorMax++;
+					System.out.println(instructorMax);
+				}else {
+					return;
+				}
+			} 
+			
+			}));
+	}
+	
+	private void removeInstructorButton(Button removeInstructorButton, HBox instructorHBox) {
+		removeInstructorButton.setOnAction((new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(instructorMax > 0) {
+					instructorChoiceBoxes.remove(instructorChoiceBoxes.get(instructorChoiceBoxes.size()-1));
+					System.out.println(instructorChoiceBoxes.size() + " CHOICES");
+					instructorHBox.getChildren().remove(instructorHBox.getChildren().size()-3);
+					instructorMax--;
+					System.out.println(instructorMax);
+				}else {
+					return;
+				}
+			} 
+			
+			}));
+	}
+	
 	// Deletes a client from the table
 	private void deleteClient() {
 		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
@@ -310,7 +379,7 @@ public class ClientEntryController {
 	}
 	
 	
-	// Finds client by phone number and name
+	// Finds client by ID number and name
 	// Then replaces the object data in the array list with the data
 	// From the field entries
 	private void findAndReplaceClient(){
