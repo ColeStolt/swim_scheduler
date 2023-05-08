@@ -117,8 +117,16 @@ public class ClientEntryController {
 	
 	public void saveClient() {
 		
+		// Populate an instructor arraylist to add to a client ----
+		ArrayList<Instructor> tempList = new ArrayList<Instructor>();
+		for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
+			tempList.add(instructorChoiceBoxes.get(i).getValue());
+		}
+		// Garbage collection should be able to handle this
+		// -------
+		
 		if(clientTempReference.getClient() == null) {
-			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), instructorChoice.getValue(), Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+			clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
 			clientDB.saveData();
 		} else {
 			findAndReplaceClient();

@@ -181,12 +181,15 @@ public class ClientCard extends BorderPane{
 		FlowPane instructorFlow = new FlowPane();
 		
 		// Labels
-		Label instructorLabel = new Label(clientReference.getInstructor());
-		instructorLabel.setId("instructorLabel");
+		for(int i = 0; i < clientReference.getInstructor().size(); i++) {
+			Label instructorLabel = new Label(clientReference.getInstructor().get(i).getInstructorName());
+			instructorLabel.setId("instructorLabel");
+			
+			// Flow settings
+			instructorFlow.setId("cardBottomLabels");
+			instructorFlow.getChildren().add(instructorLabel);
+		}
 		
-		// Flow settings
-		instructorFlow.setId("cardBottomLabels");
-		instructorFlow.getChildren().add(instructorLabel);
 		
 		return instructorFlow;
 	}
