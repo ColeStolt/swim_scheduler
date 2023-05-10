@@ -1,3 +1,10 @@
+#topLabelsContainer {
+	-fx-background-color: #183147;
+	-fx-border-color: #183147;
+	-fx-border-radius: 25px;
+	-fx-background-radius: 25px;
+}
+
 #mainCardPane{
 	-fx-border-width: 10px;
 	-fx-border-color: #242B32;
@@ -16,4 +23,28 @@
 #mainCardPane:pressed{
 	-fx-background-color: #1f4a70;
 	-fx-border-color: #1f4a70;
+}
+
+#phoneAndAddress{
+	-fx-text-fill: #8A8A8A;
+	-fx-font-size: 17;
+}
+
+#cardBottomLabels{
+	-fx-border-color: transparent;
+	-fx-background-color: transparent;
+	-fx-padding: 10px 0 0 0;
+	-fx-font-size: 20;
+}
+
+
+#instructorLabel{
+	-fx-padding: 3px 3px 3px 3px;
+	-fx-text-fill: #ffffff;
+	-fx-border-color: #ffffff;
+}
+
+#bottomLabels{
+	-fx-font-size: 15;
+	-fx-text-fill: #8A8A8A;
 }

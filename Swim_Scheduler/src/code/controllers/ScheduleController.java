@@ -1,13 +1,26 @@
 package code.controllers;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Locale;
 
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+
 import code.customUI.MaskedTextField;
+import code.datapersistance_dao.AuthCalendarSingleton;
+import code.datapersistance_dao.ClientCardReferenceSingleton;
+import code.datapersistance_dao.ClientDataDB;
+import code.datapersistance_dao.MainScreenSingleton;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 public class ScheduleController {
@@ -23,13 +36,22 @@ public class ScheduleController {
 	@FXML BorderPane timeBorderpane;
 	@FXML DatePicker startDatePicker;
 	@FXML ComboBox<String> morningNoonComboBox;
+	@FXML Label clientName;
 	
 	MaskedTextField timeField;
+	
+	// Singletons
+	private AuthCalendarSingleton instance = AuthCalendarSingleton.getInstance(); 
+	private ClientDataDB clientDB = ClientDataDB.getInstance();
+	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
+	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 	
 	public void initialize() {
 		
 		timeOfLessonsSetup();
 		comboBoxSetup();
+		clientName.setText(clientTempReference.getClient().getClientName());
+		startDatePicker.setValue(LocalDate.now());
 	}
 	
 	void timeOfLessonsSetup() {
@@ -45,12 +67,25 @@ public class ScheduleController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.US);
 		String formattedValue = (startDatePicker.getValue()).format(formatter);
 		System.out.println(formattedValue);
+		
+		
 	}
 	
 	public void comboBoxSetup() {
 		morningNoonComboBox.getItems().add("AM");
 		morningNoonComboBox.getItems().add("PM");
 		morningNoonComboBox.setValue("AM");
+	}
+	
+	public void cancelSchedule() {
+		try {
+			clientTempReference.setClientReference(null);
+			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
+			//mainScenePane.setBottom(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

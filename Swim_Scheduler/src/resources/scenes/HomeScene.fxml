@@ -1,8 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="1109.0" style="-fx-background-color: #212121;" stylesheets="@../css/homeSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.controllers.HomeController">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="697.0" style="-fx-background-color: #343E47; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+               </HBox.margin>
+               <top>
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="83.0" prefWidth="568.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Clients Added" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri Bold" size="57.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </top>
+               <center>
+                  <LineChart fx:id="clientChart" BorderPane.alignment="CENTER">
+                    <xAxis>
+                      <CategoryAxis prefWidth="469.0" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </center>
+            </BorderPane>
+            <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="700.0" style="-fx-background-color: #343E47; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <top>
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="83.0" prefWidth="568.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Money Made" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri Bold" size="57.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </FlowPane>
+               </top>
+               <center>
+                  <LineChart fx:id="moneyChart" BorderPane.alignment="CENTER">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </LineChart>
+               </center>
+            </BorderPane>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <BorderPane prefHeight="273.0" prefWidth="1089.0" style="-fx-background-color: #343E47; -fx-border-width: 10px; -fx-border-radius: 25px; -fx-background-radius: 35px;" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </BorderPane.margin>
+         <top>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Upcoming Lessons" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Calibri Bold" size="57.0" />
+               </font>
+            </Label>
+         </top>
+      </BorderPane>
+   </bottom>
+</BorderPane>

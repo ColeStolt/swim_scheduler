@@ -1,0 +1,24 @@
+.axis {
+    -fx-font-size: 2px;    
+    -fx-tick-label-fill: #ffffff;
+    -fx-font-family: Calibri;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+ 
+.axis-label {
+   -fx-text-fill: #ffffff; 
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #586f80;
+}
+
+.chart-plot-background {
+    -fx-background-color: #313a40;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 10px;
+}
+.axis-label {
+  -fx-text-fill: #ffffff;
+}

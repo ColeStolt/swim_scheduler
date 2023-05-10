@@ -67,7 +67,7 @@ public class Client implements java.io.Serializable{
 		scheduled = false;
 	}
 
-	// Called when edits to the prices have been made to the prices
+	// Called when edits to the prices have been made
 	public void updateTotal() {
 		// Checking for if kids are zero (zero means client is doing lessons)
 		if (this.numberOfKids == 0) {

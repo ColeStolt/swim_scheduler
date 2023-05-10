@@ -10,11 +10,11 @@
 
 .dayButtons {
 	-fx-background-color: #738a9e;
-	-fx-cursor: hand;
 }
 
 .dayButtons:hover {
 	-fx-background-color: #5d6f80;
+	-fx-cursor: hand;
 }
 
 .dayButtons:pressed {
