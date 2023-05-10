@@ -21,8 +21,6 @@ public class TextService implements java.io.Serializable{
 		      new com.twilio.type.PhoneNumber("+19258077153"),
 		      messageText)
 		    .create();
-
-		    System.out.println(message.getSid());  
 	}
 	
 }
