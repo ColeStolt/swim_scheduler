@@ -13,13 +13,9 @@
 }
 
 .dayButtons:hover {
-	-fx-background-color: #5d6f80;
 	-fx-cursor: hand;
 }
 
-.dayButtons:pressed {
-	-fx-background-color: #829cb3;
-}
 
 .text-field {
     -fx-alignment: center;   

@@ -16,37 +16,37 @@
          <center>
             <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="121.0" prefWidth="1089.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="sundayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Sunday">
+                  <Button fx:id="sundayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setSunday" styleClass="dayButtons" text="Sunday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mondayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Monday">
+                  <Button fx:id="mondayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setMonday" styleClass="dayButtons" text="Monday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="tuesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Tuesday">
+                  <Button fx:id="tuesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setTuesday" styleClass="dayButtons" text="Tuesday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="wednesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" prefWidth="131.0" styleClass="dayButtons" text="Wednesday">
+                  <Button fx:id="wednesdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setWednesday" prefWidth="131.0" styleClass="dayButtons" text="Wednesday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="thursdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Thursday">
+                  <Button fx:id="thursdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setThursday" styleClass="dayButtons" text="Thursday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="fridayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Friday">
+                  <Button fx:id="fridayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setFriday" styleClass="dayButtons" text="Friday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="saturdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" styleClass="dayButtons" text="Saturday">
+                  <Button fx:id="saturdayButton" minHeight="40.0" minWidth="131.0" mnemonicParsing="false" onAction="#setSaturday" styleClass="dayButtons" text="Saturday">
                      <font>
                         <Font name="Calibri Bold" size="21.0" />
                      </font>
