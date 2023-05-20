@@ -24,7 +24,6 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import code.datapersistance_dao.AuthCalendarSingleton;
-import code.services.CalendarAPIExample;
 
 public class MainStart {
 
@@ -73,7 +72,7 @@ public class MainStart {
 	
 	// Gets necessary credentials for OAuth account
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        InputStream in = CalendarAPIExample.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = MainStart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)

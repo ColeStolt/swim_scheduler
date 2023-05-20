@@ -7,6 +7,7 @@ import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
 import code.dataObjects.Instructor;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
+import code.datapersistance_dao.ClientChartData;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
@@ -44,6 +45,7 @@ public class ClientEntryController {
 	private ClientDataDB clientDB = ClientDataDB.getInstance();
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
+	private ClientChartData clientChartData = ClientChartData.getInstance();
 	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
 	
 	@FXML private BorderPane mainScenePane;
@@ -122,12 +124,14 @@ public class ClientEntryController {
 			for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
 				tempList.add(instructorChoiceBoxes.get(i).getValue());
 			}
-			// Garbage collection should be able to handle this
 			// -------
 		
 			if(clientTempReference.getClient() == null) {
 				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
 				clientDB.saveData();
+				// Add client to chart data
+				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setClients(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getClients() + 1);
+				clientChartData.saveData();
 			} else {
 				findAndReplaceClient();
 				clientTempReference.setClientReference(null);
@@ -152,7 +156,7 @@ public class ClientEntryController {
 	
 	public String parseData(String data) {
 		
-		data = data.replace("-", "0");
+		data = data.replace(" ", "");
 		data = data.replace("$", "");
 		return data;
 	}
@@ -170,7 +174,7 @@ public class ClientEntryController {
 		nameField = new TextField();
 		phoneNumberField = new MaskedTextField("(###) ###-####");
 		addressField = new TextField();
-		kidsField = new MaskedTextField("#", '-');
+		kidsField = new MaskedTextField("#", ' ');
 		
 		// Declare panes
 		titlePane = new BorderPane();
@@ -215,8 +219,8 @@ public class ClientEntryController {
 	public void lessonInfoSetup() {
 		// Declare Fields
 		instructorChoice = new ChoiceBox<Instructor>();
-		numberOfLessonsField = new MaskedTextField("##", '-');
-		amountPerLessonField = new MaskedTextField("$###.00", '-');
+		numberOfLessonsField = new MaskedTextField("##", ' ');
+		amountPerLessonField = new MaskedTextField("$###.00", ' ');
 		paidInFullRadio = new RadioButton();
 		addInstructorButton = new Button("+");
 		removeInstructorButton = new Button("-");
@@ -308,7 +312,7 @@ public class ClientEntryController {
 		addressField.setText(clientTempReference.getClient().getAddressOfLessons());
 		kidsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfKids()));
 		numberOfLessonsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfLessons()));
-		amountPerLessonField.setPlainText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
+		amountPerLessonField.setText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
 		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
 	}
 	
@@ -338,6 +342,8 @@ public class ClientEntryController {
 					Alert sceneAlert = new Alert(AlertType.INFORMATION);
 					sceneAlert.setContentText("Client " + tempName + " has been successfully deleted.");
 					sceneAlert.show();
+					clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setClients(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getClients() - 1);
+					clientChartData.saveData();
 					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

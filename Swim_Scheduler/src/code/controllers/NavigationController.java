@@ -46,6 +46,13 @@ public class NavigationController {
 	public void initialize() {
 		initializeDateAndTime();
 		mainScreen.setPane(mainBorderPane);
+		
+		try {
+			mainBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/HomeScene.fxml")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
