@@ -36,6 +36,7 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 25px;
 	-fx-background-color: #242B32;
+	-fx-mark-color: #ffffff;
 }
 
 #labels{
@@ -66,6 +67,22 @@
 	-fx-background-color: #242B32;
 	-fx-mark-color: #ffffff;
 }
+
+.spinner .text-field {
+    -fx-text-fill: #ffffff; 
+    -fx-background-color: #242B32;
+}
+
+#spinners {
+	-fx-border-color:  #343E47;
+	-fx-border-width: 0px 0px 10px 10px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 25px;
+	-fx-background-color: #242B32;
+	-fx-base: #242B32;
+}
+
 
 #addButton {
 	-fx-border-color:  #343E47;

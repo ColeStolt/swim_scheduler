@@ -146,7 +146,7 @@ public class InstructorEntryController {
 							Alert sceneAlert = new Alert(AlertType.INFORMATION);
 							sceneAlert.setContentText("Instructor " + tempName + " has been successfully deleted.");
 							sceneAlert.show();
-							mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
+							mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/InstructorsScene.fxml")));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

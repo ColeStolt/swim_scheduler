@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -12,6 +13,7 @@ import java.util.Map.Entry;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 
 import code.customUI.MaskedTextField;
@@ -87,16 +89,23 @@ public class ScheduleController {
 
 	public void sendAndSaveSchedule() throws IOException {
 
+		boolean daySelected = false;
+		
 		// Check for empty fields
 		for (Entry<String, Boolean> pair : dayMap.entrySet()) {
 		    if(pair.getValue() == true) {
+		    	daySelected = true;
 		    	break;
-		    } else {
-		    	Alert daySelection = new Alert(AlertType.ERROR);
-		    	daySelection.setContentText("No days are selected. Please select at least one day.");
-		    	daySelection.showAndWait();
-		    	return;
 		    }
+		}
+		
+		if(daySelected == false) {
+		    
+	    	Alert daySelection = new Alert(AlertType.ERROR);
+	    	daySelection.setContentText("No days are selected. Please select at least one day.");
+	    	daySelection.showAndWait();
+	    	
+	    	return;
 		}
 		
 		// Check for incorrect time field
@@ -122,19 +131,35 @@ public class ScheduleController {
 		} else {
 
 			// Text client about start date
+			DateTimeFormatter readableFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US);
 			TextService.sendText(clientTempReference.getClient().getPhoneNumber(), clientTempReference.getClient()
 					.getClientName()
 					+ ",\nWe're so excited to have you join us at Rockwall Private Swimming Lessons!\n\nYour lessons start on "
-					+ startDatePicker.getValue() + " at " + LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a")) + "\n\n\nSee you then!");
-
+					+ (startDatePicker.getValue()).format(readableFormat) + " at " + LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a")) + "\n\n\nSee you then!");
+			
+			
+			// Text all instructors about start date
+			for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+				TextService.sendText(clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(), clientTempReference.getClient().getClientName() + "\n\n" + "Start date: " + (startDatePicker.getValue()).format(readableFormat)
+						+ "\n\n" + "They have " + clientTempReference.getClient().getNumberOfLessons() + "lessons");
+			}
+			
+			// Format date for google ease
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
 			String formattedValue = (startDatePicker.getValue()).format(formatter);
-			System.out.println(formattedValue);
+
 
 			// Event creation
 			Event event = new Event().setSummary(clientTempReference.getClient().getClientName() + " Swim Lessons")
 					.setLocation(clientTempReference.getClient().getAddressOfLessons())
 					.setDescription(clientTempReference.getClient().getNumberOfKids() + " kids");
+			
+			// Add instructor as an attendee
+			ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
+					for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+						instructors.add(new EventAttendee().setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+					}
+			event.setAttendees(instructors);
 
 			// Event end and start time
 			DateTime startDateTime = new DateTime(formattedValue + "T" + timeField.getText() + ":00-05:00");
