@@ -1,9 +1,13 @@
 package code.controllers;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
+import code.datapersistance_dao.ClientChartData;
+import code.datapersistance_dao.ClientDataDB;
 import javafx.fxml.FXML;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,40 +21,42 @@ public class HomeController {
 	
 	final NumberAxis xAxisClient = new NumberAxis(0, 20000, 40000);
 	final CategoryAxis yAxisClient = new CategoryAxis();
+	private ClientChartData clientChartData = ClientChartData.getInstance();
+
 	
 	public void initialize() {
 		clientChartSetup();
 		moneyChartSetup();
 	}
 	
+	
+	private void moneyChartSetup() {
+
+	}
+	
+	// Should probably be done in ClientDB
 	private void clientChartSetup() {
+		// chart setup
 		XYChart.Series<String, Integer> series = new Series<String, Integer>();
 		series.setName("Clients Per Month");
-		
-		
-		series.getData().add(new XYChart.Data<String, Integer>("Jan", 23));
-		series.getData().add(new XYChart.Data<String, Integer>("Feb", 22));
-		series.getData().add(new XYChart.Data<String, Integer>("Mar", 15));
-		series.getData().add(new XYChart.Data<String, Integer>("Apr", 31));
-		series.getData().add(new XYChart.Data<String, Integer>("May", 18));
-		series.getData().add(new XYChart.Data<String, Integer>("Jun", 27));
+
+		// Iterate through tracked months and add them
+		if(clientChartData.getMonthlyEntries().size() > 12){
+			for(int i = clientChartData.getMonthlyEntries().size() - 12; i < clientChartData.getMonthlyEntries().size(); i++) {
+				series.getData().add(new XYChart.Data<String, Integer>(clientChartData.getMonthlyEntries().get(i).getMonth().toString(), clientChartData.getMonthlyEntries().get(i).getClients()));
+			}
+			// If less then 12 months present then use first 12
+		} else {
+			for(int i = 0; i < clientChartData.getMonthlyEntries().size(); i++) {
+				series.getData().add(new XYChart.Data<String, Integer>(clientChartData.getMonthlyEntries().get(i).getMonth().toString(), clientChartData.getMonthlyEntries().get(i).getClients()));
+			}
+		}
 		
 		clientChart.getData().add(series);
 	}
 	
-	private void moneyChartSetup() {
-		XYChart.Series<String, Integer> series = new Series<String, Integer>();
-		series.setName("Money Made Per Month");
+	private void moneySetup() {
 		
-		
-		series.getData().add(new XYChart.Data<String, Integer>("Jan", 2342));
-		series.getData().add(new XYChart.Data<String, Integer>("Feb", 1234));
-		series.getData().add(new XYChart.Data<String, Integer>("Mar", 5423));
-		series.getData().add(new XYChart.Data<String, Integer>("Apr", 10324));
-		series.getData().add(new XYChart.Data<String, Integer>("May", 12452));
-		series.getData().add(new XYChart.Data<String, Integer>("Jun", 20312));
-		
-		moneyChart.getData().add(series);
 	}
 	
 }

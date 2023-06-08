@@ -7,11 +7,13 @@ import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
 import code.dataObjects.Instructor;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
+import code.datapersistance_dao.ClientChartData;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,9 +22,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +47,7 @@ public class ClientEntryController {
 	private ClientDataDB clientDB = ClientDataDB.getInstance();
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
+	private ClientChartData clientChartData = ClientChartData.getInstance();
 	private InstructorDataDB instructorDB = InstructorDataDB.getInstance();
 	
 	@FXML private BorderPane mainScenePane;
@@ -57,14 +61,19 @@ public class ClientEntryController {
 	private TextField nameField;
 	private MaskedTextField phoneNumberField;
 	private TextField addressField;
-	private MaskedTextField kidsField;
+	private Spinner<Integer> kidsField;
 	private ChoiceBox<Instructor> instructorChoice;
-	private MaskedTextField numberOfLessonsField;
-	private MaskedTextField amountPerLessonField;
+	private Spinner<Integer> numberOfLessonsField;
+	private Spinner<Double> amountPerLessonField;
 	private RadioButton paidInFullRadio;
 	
 	// List of comboBoxes for getting all instructors
 	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
+	
+	// Spinner Data
+	SpinnerValueFactory<Integer> kidValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 15, 1);
+	SpinnerValueFactory<Integer> lessonValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 12);
+	SpinnerValueFactory<Double> lessonAmountValues = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.00, 400.00, 100.00, 5.00);
 	
 	// Panes
 	private HBox radioAndLabel;
@@ -115,6 +124,13 @@ public class ClientEntryController {
 	}
 	
 	public void saveClient() {
+
+		if(amountPerLessonField.getValue() == null) {
+			Alert sceneAlert = new Alert(AlertType.INFORMATION);
+			sceneAlert.setContentText("\"Amount per lesson\" can not be left blank.");
+			sceneAlert.show();
+			return;
+		}
 		
 		if(instructorDB.getInstructorDB().size() > 0) {
 			// Populate an instructor arraylist to add to a client ----
@@ -122,12 +138,14 @@ public class ClientEntryController {
 			for(int i = 0; i < instructorChoiceBoxes.size(); i++) {
 				tempList.add(instructorChoiceBoxes.get(i).getValue());
 			}
-			// Garbage collection should be able to handle this
 			// -------
 		
 			if(clientTempReference.getClient() == null) {
-				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), Short.parseShort(parseData(kidsField.getText())), tempList, Short.parseShort(parseData(numberOfLessonsField.getText())), Float.parseFloat(parseData(amountPerLessonField.getText())), paidInFullRadio.isSelected()));
+				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), kidsField.getValue().shortValue(), tempList, numberOfLessonsField.getValue().shortValue(), amountPerLessonField.getValue().floatValue(), paidInFullRadio.isSelected()));
 				clientDB.saveData();
+				// Add client to chart data
+				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setClients(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getClients() + 1);
+				clientChartData.saveData();
 			} else {
 				findAndReplaceClient();
 				clientTempReference.setClientReference(null);
@@ -152,8 +170,7 @@ public class ClientEntryController {
 	
 	public String parseData(String data) {
 		
-		data = data.replace("-", "0");
-		data = data.replace("$", "");
+
 		return data;
 	}
 	
@@ -166,11 +183,15 @@ public class ClientEntryController {
 	
 	public void instructorInfoSetup() {
 		
+		
 		// Declare fields
 		nameField = new TextField();
 		phoneNumberField = new MaskedTextField("(###) ###-####");
 		addressField = new TextField();
-		kidsField = new MaskedTextField("#", '-');
+		kidsField = new Spinner<Integer>();
+
+		// Add data to spinners
+		kidsField.setValueFactory(kidValues);
 		
 		// Declare panes
 		titlePane = new BorderPane();
@@ -193,7 +214,7 @@ public class ClientEntryController {
 		nameField.setId("fields");
 		phoneNumberField.setId("phoneNumberField");
 		addressField.setId("fields");
-		kidsField.setId("fields");
+		kidsField.setId("spinners");
 		
 		// Pane settings
 		titlePane.setId("titlePane");
@@ -213,13 +234,30 @@ public class ClientEntryController {
 	}
 	
 	public void lessonInfoSetup() {
+		
+		
+		
 		// Declare Fields
 		instructorChoice = new ChoiceBox<Instructor>();
-		numberOfLessonsField = new MaskedTextField("##", '-');
-		amountPerLessonField = new MaskedTextField("$###.00", '-');
+		numberOfLessonsField = new Spinner<Integer>();
+		amountPerLessonField = new Spinner<Double>();
 		paidInFullRadio = new RadioButton();
 		addInstructorButton = new Button("+");
 		removeInstructorButton = new Button("-");
+		
+		// Adding listener to a spinner
+		amountPerLessonField.setEditable(true);
+		amountPerLessonField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*") || newValue.length() > 3){
+            	amountPerLessonField.getEditor().setText(oldValue);
+
+            }
+        });
+		
+		// Adding data to spinners
+		amountPerLessonField.setValueFactory(lessonAmountValues);
+		numberOfLessonsField.setValueFactory(lessonValues);
+		
 		
 		// Declare Labels
 		instructorLabel = new Label("Instructor:");
@@ -242,8 +280,8 @@ public class ClientEntryController {
 		instructorChoice.getSelectionModel().selectFirst();
 		
 		// Field settings
-		numberOfLessonsField.setId("fields");
-		amountPerLessonField.setId("fields");
+		numberOfLessonsField.setId("spinners");
+		amountPerLessonField.setId("spinners");
 		
 		// Radio settings
 		paidInFullRadio.setId("radioButton");
@@ -306,9 +344,9 @@ public class ClientEntryController {
 		nameField.setText(clientTempReference.getClient().getClientName());
 		phoneNumberField.setPlainText(clientTempReference.getClient().getPhoneNumber());
 		addressField.setText(clientTempReference.getClient().getAddressOfLessons());
-		kidsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfKids()));
-		numberOfLessonsField.setPlainText(String.valueOf(clientTempReference.getClient().getNumberOfLessons()));
-		amountPerLessonField.setPlainText(String.valueOf(clientTempReference.getClient().getAmountPerLesson()));
+		kidsField.getValueFactory().setValue((int) clientTempReference.getClient().getNumberOfKids());
+		numberOfLessonsField.getValueFactory().setValue((int) clientTempReference.getClient().getNumberOfLessons());
+		amountPerLessonField.getValueFactory().setValue((double) clientTempReference.getClient().getAmountPerLesson());
 		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
 	}
 	
@@ -338,6 +376,8 @@ public class ClientEntryController {
 					Alert sceneAlert = new Alert(AlertType.INFORMATION);
 					sceneAlert.setContentText("Client " + tempName + " has been successfully deleted.");
 					sceneAlert.show();
+					clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setClients(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getClients() - 1);
+					clientChartData.saveData();
 					mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientsScene.fxml")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -416,7 +456,7 @@ public class ClientEntryController {
 				clientDB.getClientDB().get(i).setClientName(nameField.getText());
 				clientDB.getClientDB().get(i).setPhoneNumber(phoneNumberField.getText());
 				clientDB.getClientDB().get(i).setAddressOfLessons(addressField.getText());
-				clientDB.getClientDB().get(i).setNumberOfKids(Short.parseShort(parseData(kidsField.getText())));
+				clientDB.getClientDB().get(i).setNumberOfKids(kidsField.getValue().shortValue());
 				
 				// Populate an instructor arraylist to add to a client ----
 				ArrayList<Instructor> tempList = new ArrayList<Instructor>();
@@ -427,8 +467,8 @@ public class ClientEntryController {
 				// -------
 				
 				clientDB.getClientDB().get(i).setInstructor(tempList);
-				clientDB.getClientDB().get(i).setNumberOfLessons(Short.parseShort(parseData(numberOfLessonsField.getText())));
-				clientDB.getClientDB().get(i).setAmountPerLesson(Float.parseFloat(parseData(amountPerLessonField.getText())));
+				clientDB.getClientDB().get(i).setNumberOfLessons(numberOfLessonsField.getValue().shortValue());
+				clientDB.getClientDB().get(i).setAmountPerLesson(amountPerLessonField.getValue().floatValue());
 				clientDB.getClientDB().get(i).setPaidInFull(paidInFullRadio.isSelected());
 				clientDB.getClientDB().get(i).updateTotal();
 				break;
