@@ -397,8 +397,11 @@ public class ClientEntryController {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				
+	
+				
 				// TODO Auto-generated method stub
-				if(instructorMax < 3) {
+				if(instructorMax < 3 && instructorMax > 0) {
 					ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
 					instructorChoice.setId("choiceBox");
 					populateChoiceBox(instructorChoice);
