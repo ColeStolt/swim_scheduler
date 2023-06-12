@@ -60,7 +60,7 @@ public class MainStart {
                 if (start == null) {
                     start = event.getStart().getDate();
                 }
-                System.out.printf("%s (%s)", event.getSummary(), start);
+                System.out.println(event.getSummary() + " " + start);
             }
         }
         

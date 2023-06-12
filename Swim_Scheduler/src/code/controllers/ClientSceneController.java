@@ -75,7 +75,24 @@ public class ClientSceneController {
 		scrollPaneVBox.getChildren().removeAll(scrollPaneVBox.getChildren());
 		for(int i = 0; i < clientData.getClientDB().size(); i++) {
 			if(clientData.getClientDB().get(i).getClientName().toLowerCase().contains(clientSearchBar.getText().toLowerCase())) {
-				scrollPaneVBox.getChildren().add(new ClientCard(clientData.getClientDB().get(i)));
+				
+				// Adding handler back to new cards
+				ClientCard card = new ClientCard(clientData.getClientDB().get(i));
+				
+				card.setOnMouseClicked((new EventHandler<MouseEvent>() { 
+					   public void handle(MouseEvent event) { 
+					      try {
+					    	  clientTempReference.setClientReference(card.getClientReference());
+					    	 
+							mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					   } 
+					}));
+				
+				scrollPaneVBox.getChildren().add(card);
 			}
 		}
 	}

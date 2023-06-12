@@ -141,10 +141,15 @@ public class ClientEntryController {
 			// -------
 		
 			if(clientTempReference.getClient() == null) {
-				clientDB.getClientDB().add(new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), kidsField.getValue().shortValue(), tempList, numberOfLessonsField.getValue().shortValue(), amountPerLessonField.getValue().floatValue(), paidInFullRadio.isSelected()));
+				
+				// Create client
+				Client newClient = new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), kidsField.getValue().shortValue(), tempList, numberOfLessonsField.getValue().shortValue(), amountPerLessonField.getValue().floatValue(), paidInFullRadio.isSelected());
+				
+				clientDB.getClientDB().add(newClient);
 				clientDB.saveData();
 				// Add client to chart data
 				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setClients(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getClients() + 1);
+				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setMoney(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getMoney() + newClient.getTotalAmountForLessons());
 				clientChartData.saveData();
 			} else {
 				findAndReplaceClient();
@@ -399,9 +404,9 @@ public class ClientEntryController {
 			public void handle(ActionEvent arg0) {
 				
 	
-				
+				System.out.println("hello " + instructorMax);
 				// TODO Auto-generated method stub
-				if(instructorMax < 3 && instructorMax > 0) {
+				if(instructorMax < 3 && instructorMax > -1) {
 					ChoiceBox<Instructor> instructorChoice = new ChoiceBox<Instructor>();
 					instructorChoice.setId("choiceBox");
 					populateChoiceBox(instructorChoice);
@@ -440,6 +445,7 @@ public class ClientEntryController {
 		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
 			if(clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
 				clientDB.getClientDB().remove(i);
+				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setMoney(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getMoney() - clientTempReference.getClient().getTotalAmountForLessons());
 				break;
 			}
 		}

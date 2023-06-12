@@ -1,11 +1,14 @@
 package code.controllers;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -57,6 +61,8 @@ public class ScheduleController {
 	ComboBox<String> morningNoonComboBox;
 	@FXML
 	Label clientName;
+	@FXML
+	CheckBox notifyCheck;
 
 	Map<String, Boolean> dayMap = new HashMap<String, Boolean>();
 
@@ -90,99 +96,160 @@ public class ScheduleController {
 	public void sendAndSaveSchedule() throws IOException {
 
 		boolean daySelected = false;
-		
+
 		// Check for empty fields
 		for (Entry<String, Boolean> pair : dayMap.entrySet()) {
-		    if(pair.getValue() == true) {
-		    	daySelected = true;
-		    	break;
-		    }
+			if (pair.getValue() == true) {
+				daySelected = true;
+				break;
+			}
 		}
-		
-		if(daySelected == false) {
-		    
-	    	Alert daySelection = new Alert(AlertType.ERROR);
-	    	daySelection.setContentText("No days are selected. Please select at least one day.");
-	    	daySelection.showAndWait();
-	    	
-	    	return;
+
+		if (daySelected == false) {
+
+			Alert daySelection = new Alert(AlertType.ERROR);
+			daySelection.setContentText("No days are selected. Please select at least one day.");
+			daySelection.showAndWait();
+
+			return;
 		}
-		
+
 		// Check for incorrect time field
 		// Check for empty fields
 
-		    if(timeField.getText().contains("-")) {
-		    	Alert daySelection = new Alert(AlertType.ERROR);
-		    	daySelection.setContentText("Start time is either empty or not filled in. Start time cannot contain \'-\'.");
-		    	daySelection.showAndWait();
-		    	return;
-		    }
-		
-		
-		// Show alert to confirm settings
+		if (timeField.getText().contains("-")) {
+			Alert daySelection = new Alert(AlertType.ERROR);
+			daySelection
+					.setContentText("Start time is either empty or not filled in. Start time cannot contain \'-\'.");
+			daySelection.showAndWait();
+			return;
+		}
+
+		// This parses the time to make it a 24 format
+		if (parseTime()) {
+
+		} else {
+			return;
+		}
+
+		// Create alert
 		Alert proceed = new Alert(AlertType.CONFIRMATION);
-		proceed.setContentText(
-				"You are about to schedule a client.\nThis will send them a text and an email about their schedule.\nAre you sure you want to do this?");
-		proceed.showAndWait();
-		
-		
+
+		// Show alert to confirm settings
+		if (notifyCheck.isSelected()) {
+			proceed.setContentText(
+					"You are about to schedule a client.\nThis will send them a text and an email about their schedule.\nAre you sure you want to do this?");
+			proceed.showAndWait();
+		} else {
+			proceed.setResult(ButtonType.YES);
+		}
+
 		if (proceed.getResult() == ButtonType.CANCEL) {
 			return;
 		} else {
 
-			// Text client about start date
-			DateTimeFormatter readableFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US);
-			TextService.sendText(clientTempReference.getClient().getPhoneNumber(), clientTempReference.getClient()
-					.getClientName()
-					+ ",\nWe're so excited to have you join us at Rockwall Private Swimming Lessons!\n\nYour lessons start on "
-					+ (startDatePicker.getValue()).format(readableFormat) + " at " + LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a")) + "\n\n\nSee you then!");
-			
-			
-			// Text all instructors about start date
-			for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
-				TextService.sendText(clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(), clientTempReference.getClient().getClientName() + "\n\n" + "Start date: " + (startDatePicker.getValue()).format(readableFormat)
-						+ "\n\n" + "They have " + clientTempReference.getClient().getNumberOfLessons() + "lessons");
+			// Check one more time
+			if (notifyCheck.isSelected()) {
+				// Text client about start date
+				DateTimeFormatter readableFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US);
+				TextService.sendText(clientTempReference.getClient().getPhoneNumber(), clientTempReference.getClient()
+						.getClientName()
+						+ ",\nWe're so excited to have you join us at Rockwall Private Swimming Lessons!\n\nYour lessons start on "
+						+ (startDatePicker.getValue()).format(readableFormat) + " at "
+						+ LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm"))
+								.format(DateTimeFormatter.ofPattern("hh:mm a"))
+						+ "\n\n\nSee you then!");
+
+				// Text all instructors about start date
+				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+					TextService.sendText(
+							clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(),
+							clientTempReference.getClient().getClientName() + "\n\n" + "Start date: "
+									+ (startDatePicker.getValue()).format(readableFormat) + "\n\n" + "They have "
+									+ clientTempReference.getClient().getNumberOfLessons() + " lessons at "
+									+ clientTempReference.getClient().getAddressOfLessons());
+				}
 			}
-			
+
 			// Format date for google ease
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
 			String formattedValue = (startDatePicker.getValue()).format(formatter);
-
 
 			// Event creation
 			Event event = new Event().setSummary(clientTempReference.getClient().getClientName() + " Swim Lessons")
 					.setLocation(clientTempReference.getClient().getAddressOfLessons())
 					.setDescription(clientTempReference.getClient().getNumberOfKids() + " kids");
-			
-			// Add instructor as an attendee
-			ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
-					for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
-						instructors.add(new EventAttendee().setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
-					}
-			event.setAttendees(instructors);
+
+			// Check again ------------------------------
+			if (notifyCheck.isSelected()) {
+				// Add instructor as an attendee
+				ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
+				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+					instructors.add(new EventAttendee()
+							.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+				}
+				event.setAttendees(instructors);
+			}
 
 			// Event end and start time
 			DateTime startDateTime = new DateTime(formattedValue + "T" + timeField.getText() + ":00-05:00");
 			EventDateTime start = new EventDateTime().setDateTime(startDateTime).setTimeZone("US/Central");
 			event.setStart(start);
 
+			// Configure end time
+			if (clientTempReference.getClient().getNumberOfKids() < 2) {
+
+				String tokens[] = timeField.getText().split(":");
+
+				int hour = Integer.parseInt(tokens[0]);
+				int minute = Integer.parseInt(tokens[1]);
+
+				if ((minute + 30) > 59) {
+					hour = hour + 1;
+					minute = 30 - (60 - minute);
+					
+					if(minute < 10) {
+						tokens[1] = "0" + Integer.toString(minute);
+					} else {
+						tokens[1] = Integer.toString(minute);
+					}
+					
+					tokens[0] = Integer.toString(hour);
+					
+					
+					System.out.println(minute);
+					
+					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
+				} else {
+					minute = minute + 30;
+					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
+				}
+				
+				
+
+			} else {
+				//for (int i = 0; i < clientTempReference.getClient().getNumberOfKids(); i++) {
+
+				//}
+			}
+
 			DateTime endDateTime = new DateTime(formattedValue + "T" + timeField.getText() + ":00-05:00");
 			EventDateTime end = new EventDateTime().setDateTime(endDateTime).setTimeZone("US/Central");
 			event.setEnd(end);
-			
+
 			String tempString = "";
-			
+
 			// Create a string that contains the days of the week
 			for (Entry<String, Boolean> pair : dayMap.entrySet()) {
-			    if(pair.getValue() == true) {
-			    	tempString += pair.getKey() + ",";
-			    }
+				if (pair.getValue() == true) {
+					tempString += pair.getKey() + ",";
+				}
 			}
-			
+
 			tempString = tempString.substring(0, tempString.length() - 1);
 			// End string creation
-			
-			String[] recurrence = new String[] { "RRULE:FREQ=WEEKLY;BYDAY="+tempString+";COUNT="
+
+			String[] recurrence = new String[] { "RRULE:FREQ=WEEKLY;BYDAY=" + tempString + ";COUNT="
 					+ clientTempReference.getClient().getNumberOfLessons() };
 			event.setRecurrence(Arrays.asList(recurrence));
 
@@ -191,22 +258,55 @@ public class ScheduleController {
 
 			String calendarId = "primary";
 			event = instance.getCalendarReference().events().insert(calendarId, event).execute();
-			
+
 			findAndUpdateClient();
-			
-			mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
+
+			mainScreen.getPane().setCenter(
+					FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
 		}
 	}
 
+	private boolean parseTime() {
+		String tokens[] = timeField.getText().split(":");
+		// Check left side of time
+		if (Integer.parseInt(tokens[0]) > 12) {
+			Alert proceed = new Alert(AlertType.ERROR);
+			proceed.setContentText("Hour must be between 01 and 12");
+			proceed.showAndWait();
+			return false;
+		}
+		// Check right side of time
+		if (Integer.parseInt(tokens[1]) > 59) {
+			Alert proceed = new Alert(AlertType.ERROR);
+			proceed.setContentText("Minute must be between 00 and 59");
+			proceed.showAndWait();
+			return false;
+		}
+
+		// Parse time to 24 hour if equal to PM
+		if (morningNoonComboBox.getSelectionModel().getSelectedItem().equals("PM")
+				&& Integer.parseInt(tokens[0]) < 12) {
+
+			// Convert hour
+			int hour = Integer.parseInt(tokens[0]) + 12;
+			tokens[0] = Integer.toString(hour);
+
+			timeField.setPlainText(tokens[0] + ":" + tokens[1]);
+
+		}
+
+		return true;
+	}
+
 	public void findAndUpdateClient() {
-		for(int i = 0; i < clientDB.getClientDB().size(); i++) {
-			if(clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
+		for (int i = 0; i < clientDB.getClientDB().size(); i++) {
+			if (clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
 				clientDB.getClientDB().get(i).setScheduled(true);
 				clientDB.saveData();
 			}
 		}
 	}
-	
+
 	public void populateMap() {
 		dayMap.put("SU", false);
 		dayMap.put("MO", false);

@@ -3,6 +3,8 @@ package code.dataObjects;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.google.api.services.calendar.Calendar;
+
 /**
  * 
  * @author Cole Stoltz
@@ -21,6 +23,7 @@ public class Instructor implements java.io.Serializable {
 	private String instructorName;
 	private String instructorPhoneNumber;
 	private String instructorEmail;
+	private Calendar instructorCalendar;
 	
 	// List of clients
 	private ArrayList<Client> assignedClients = new ArrayList<Client>();
@@ -80,7 +83,15 @@ public class Instructor implements java.io.Serializable {
 		this.assignedClients = assignedClients;
 	}
 	
-    @Override
+    public Calendar getInstructorCalendar() {
+		return instructorCalendar;
+	}
+
+	public void setInstructorCalendar(Calendar instructorCalendar) {
+		this.instructorCalendar = instructorCalendar;
+	}
+
+	@Override
     public String toString() {
         return instructorName;
     }
