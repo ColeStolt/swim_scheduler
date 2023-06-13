@@ -446,6 +446,7 @@ public class ClientEntryController {
 			if(clientTempReference.getClient().getClientID() == clientDB.getClientDB().get(i).getClientID()) {
 				clientDB.getClientDB().remove(i);
 				clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).setMoney(clientChartData.getMonthlyEntries().get(clientChartData.getMonthlyEntries().size()-1).getMoney() - clientTempReference.getClient().getTotalAmountForLessons());
+				clientChartData.saveData();
 				break;
 			}
 		}

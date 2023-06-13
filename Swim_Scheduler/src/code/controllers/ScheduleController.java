@@ -283,6 +283,11 @@ public class ScheduleController {
 
 			String calendarId = "primary";
 			event = instance.getCalendarReference().events().insert(calendarId, event).execute();
+			
+			// Add the event to each instructors calendar
+			for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+				event = instance.getCalendarReference().events().insert(clientTempReference.getClient().getInstructor().get(i).getCalendarID(), event).execute();
+			}
 
 			findAndUpdateClient();
 
