@@ -23,7 +23,7 @@ public class Instructor implements java.io.Serializable {
 	private String instructorName;
 	private String instructorPhoneNumber;
 	private String instructorEmail;
-	private Calendar instructorCalendar;
+	private String calendarID;
 	
 	// List of clients
 	private ArrayList<Client> assignedClients = new ArrayList<Client>();
@@ -83,12 +83,12 @@ public class Instructor implements java.io.Serializable {
 		this.assignedClients = assignedClients;
 	}
 	
-    public Calendar getInstructorCalendar() {
-		return instructorCalendar;
+    public String getCalendarID() {
+		return calendarID;
 	}
 
-	public void setInstructorCalendar(Calendar instructorCalendar) {
-		this.instructorCalendar = instructorCalendar;
+	public void setCalendarID(String calendarID) {
+		this.calendarID = calendarID;
 	}
 
 	@Override

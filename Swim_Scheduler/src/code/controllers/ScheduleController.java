@@ -197,7 +197,7 @@ public class ScheduleController {
 			event.setStart(start);
 
 			// Configure end time
-			if (clientTempReference.getClient().getNumberOfKids() < 2) {
+			if (clientTempReference.getClient().getNumberOfKids() < 2 || clientTempReference.getClient().getInstructor().size() > clientTempReference.getClient().getNumberOfKids()) {
 
 				String tokens[] = timeField.getText().split(":");
 
@@ -228,9 +228,34 @@ public class ScheduleController {
 				
 
 			} else {
-				//for (int i = 0; i < clientTempReference.getClient().getNumberOfKids(); i++) {
-
-				//}
+				
+				LocalTime startTime = LocalTime.parse(timeField.getText());
+				
+		        // Step 3: Calculate the total duration in minutes
+		        int kidTime = clientTempReference.getClient().getNumberOfKids() * 30;
+				
+		        // Step 4: Calculate the ending time
+		        int instructorTime = clientTempReference.getClient().getInstructor().size() * 30;
+		        int kidsForEachInstructor = kidTime / instructorTime;
+		        int remainingMinutes = kidTime % instructorTime;
+		        int totalTime = kidsForEachInstructor * 30;
+		        
+		        if(remainingMinutes > 0) {
+		        	totalTime = totalTime + 30;
+		        }
+		        
+		        LocalTime endTime;
+		        
+				if(clientTempReference.getClient().getInstructor().size() == 1) {
+					endTime = startTime.plusMinutes(kidTime);
+				} else {
+					endTime = startTime.plusMinutes(totalTime);
+				}
+		        
+		        
+		        timeField.setPlainText(endTime.toString());
+		        
+		        
 			}
 
 			DateTime endDateTime = new DateTime(formattedValue + "T" + timeField.getText() + ":00-05:00");
