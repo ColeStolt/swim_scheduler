@@ -13,7 +13,6 @@ import code.datapersistance_dao.InstructorDataDB;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -71,7 +70,7 @@ public class ClientEntryController {
 	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
 	
 	// Spinner Data
-	SpinnerValueFactory<Integer> kidValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 15, 1);
+	SpinnerValueFactory<Integer> kidValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 15, 1);
 	SpinnerValueFactory<Integer> lessonValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 12);
 	SpinnerValueFactory<Double> lessonAmountValues = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.00, 400.00, 100.00, 5.00);
 	
@@ -128,6 +127,13 @@ public class ClientEntryController {
 		if(amountPerLessonField.getValue() == null) {
 			Alert sceneAlert = new Alert(AlertType.INFORMATION);
 			sceneAlert.setContentText("\"Amount per lesson\" can not be left blank.");
+			sceneAlert.show();
+			return;
+		}
+		
+		if(phoneNumberField.getText().contains("_")) {
+			Alert sceneAlert = new Alert(AlertType.INFORMATION);
+			sceneAlert.setContentText("\"Phone Number\" can not be left blank or contain \"_\".");
 			sceneAlert.show();
 			return;
 		}

@@ -1,12 +1,9 @@
 package code.customUI;
 
-import java.io.IOException;
-
 import code.dataObjects.Client;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.MainScreenSingleton;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -30,10 +27,12 @@ public class ClientCard extends BorderPane{
 	
 	// Reference to client object
 	private Client clientReference;
+	@SuppressWarnings("unused")
 	private ClientCardReferenceSingleton clientTempReference = ClientCardReferenceSingleton.getInstance();
 
 	// Need a reference to the main pane this
 	// class will change to the client entry scene
+	@SuppressWarnings("unused")
 	private MainScreenSingleton mainScreen = MainScreenSingleton.getInstance();
 	
 	
@@ -194,6 +193,7 @@ public class ClientCard extends BorderPane{
 	}
 	
 
+	@SuppressWarnings("unused")
 	private void scheduleHandlingSetup() {
 		this.setOnMouseClicked((new EventHandler<MouseEvent>() { 
 			   public void handle(MouseEvent event) { 

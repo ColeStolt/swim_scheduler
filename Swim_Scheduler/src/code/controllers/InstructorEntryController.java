@@ -98,6 +98,7 @@ public class InstructorEntryController {
 
 	public void cancelAdd() {
 		try {
+			tempInstructor.setInstructorReference(null);
 			mainScreen.getPane()
 					.setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/InstructorsScene.fxml")));
 		} catch (IOException e) {
@@ -110,6 +111,33 @@ public class InstructorEntryController {
 
 		if (tempInstructor.getInstructor() == null) {
 
+			Alert alert = new Alert(AlertType.ERROR);
+			
+			if(nameField.getText() == "" || nameField.getText() == null) {
+				
+				alert.setContentText("Instructor name cannot be left blank.");
+				alert.showAndWait();
+				
+				return;
+			}
+			
+			if(emailField.getText() == "" || emailField.getText() == null) {
+				
+				alert.setContentText("Email cannot be left blank.");
+				alert.showAndWait();
+				
+				return;
+			}
+			
+			
+			if(phoneField.getText().contains("_")) {
+				
+				alert.setContentText("Improper phone number entered.");
+				alert.showAndWait();
+				
+				return;
+			}
+			
 			// Create instructor
 			Instructor newInstructor = new Instructor(nameField.getText(), phoneField.getText(), emailField.getText());
 

@@ -1,14 +1,11 @@
 package code.controllers;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -93,6 +90,7 @@ public class ScheduleController {
 		timeBorderpane.setCenter(timeField);
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public void sendAndSaveSchedule() throws IOException {
 
 		boolean daySelected = false;
@@ -165,7 +163,8 @@ public class ScheduleController {
 					TextService.sendText(
 							clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(),
 							clientTempReference.getClient().getClientName() + "\n\n" + "Start date: "
-									+ (startDatePicker.getValue()).format(readableFormat) + "\n\n" + "They have "
+									+ (startDatePicker.getValue()).format(readableFormat) + "\nStart Time: " + timeField
+									+ morningNoonComboBox.getSelectionModel().getSelectedItem() + "\n\n" + "They have "
 									+ clientTempReference.getClient().getNumberOfLessons() + " lessons at "
 									+ clientTempReference.getClient().getAddressOfLessons());
 				}
@@ -185,10 +184,17 @@ public class ScheduleController {
 				// Add instructor as an attendee
 				ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
 				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
-					instructors.add(new EventAttendee()
-							.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+
+					if (clientTempReference.getClient().getInstructor().contains("@") && clientTempReference.getClient().getInstructor().contains(".com")) {
+						instructors.add(new EventAttendee().setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+					} else {
+						System.out.println("Test");
+					}
 				}
-				event.setAttendees(instructors);
+				
+				if(instructors.size() != 0) {
+					event.setAttendees(instructors);
+				}
 			}
 
 			// Event end and start time
@@ -197,7 +203,8 @@ public class ScheduleController {
 			event.setStart(start);
 
 			// Configure end time
-			if (clientTempReference.getClient().getNumberOfKids() < 2 || clientTempReference.getClient().getInstructor().size() > clientTempReference.getClient().getNumberOfKids()) {
+			if (clientTempReference.getClient().getNumberOfKids() < 2 || clientTempReference.getClient().getInstructor()
+					.size() > clientTempReference.getClient().getNumberOfKids()) {
 
 				String tokens[] = timeField.getText().split(":");
 
@@ -207,55 +214,50 @@ public class ScheduleController {
 				if ((minute + 30) > 59) {
 					hour = hour + 1;
 					minute = 30 - (60 - minute);
-					
-					if(minute < 10) {
+
+					if (minute < 10) {
 						tokens[1] = "0" + Integer.toString(minute);
 					} else {
 						tokens[1] = Integer.toString(minute);
 					}
-					
+
 					tokens[0] = Integer.toString(hour);
-					
-					
+
 					System.out.println(minute);
-					
+
 					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
 				} else {
 					minute = minute + 30;
 					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
 				}
-				
-				
 
 			} else {
-				
+
 				LocalTime startTime = LocalTime.parse(timeField.getText());
-				
-		        // Step 3: Calculate the total duration in minutes
-		        int kidTime = clientTempReference.getClient().getNumberOfKids() * 30;
-				
-		        // Step 4: Calculate the ending time
-		        int instructorTime = clientTempReference.getClient().getInstructor().size() * 30;
-		        int kidsForEachInstructor = kidTime / instructorTime;
-		        int remainingMinutes = kidTime % instructorTime;
-		        int totalTime = kidsForEachInstructor * 30;
-		        
-		        if(remainingMinutes > 0) {
-		        	totalTime = totalTime + 30;
-		        }
-		        
-		        LocalTime endTime;
-		        
-				if(clientTempReference.getClient().getInstructor().size() == 1) {
+
+				// Step 3: Calculate the total duration in minutes
+				int kidTime = clientTempReference.getClient().getNumberOfKids() * 30;
+
+				// Step 4: Calculate the ending time
+				int instructorTime = clientTempReference.getClient().getInstructor().size() * 30;
+				int kidsForEachInstructor = kidTime / instructorTime;
+				int remainingMinutes = kidTime % instructorTime;
+				int totalTime = kidsForEachInstructor * 30;
+
+				if (remainingMinutes > 0) {
+					totalTime = totalTime + 30;
+				}
+
+				LocalTime endTime;
+
+				if (clientTempReference.getClient().getInstructor().size() == 1) {
 					endTime = startTime.plusMinutes(kidTime);
 				} else {
 					endTime = startTime.plusMinutes(totalTime);
 				}
-		        
-		        
-		        timeField.setPlainText(endTime.toString());
-		        
-		        
+
+				timeField.setPlainText(endTime.toString());
+
 			}
 
 			DateTime endDateTime = new DateTime(formattedValue + "T" + timeField.getText() + ":00-05:00");
@@ -283,10 +285,14 @@ public class ScheduleController {
 
 			String calendarId = "primary";
 			event = instance.getCalendarReference().events().insert(calendarId, event).execute();
-			
+
 			// Add the event to each instructors calendar
-			for(int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
-				event = instance.getCalendarReference().events().insert(clientTempReference.getClient().getInstructor().get(i).getCalendarID(), event).execute();
+			for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+
+				event = instance.getCalendarReference().events()
+						.insert(clientTempReference.getClient().getInstructor().get(i).getCalendarID(), event)
+						.execute();
+
 			}
 
 			findAndUpdateClient();

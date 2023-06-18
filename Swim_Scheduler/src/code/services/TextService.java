@@ -13,6 +13,7 @@ public class TextService implements java.io.Serializable{
 	public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
 	  public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
 	
+	@SuppressWarnings("unused")
 	public static void sendText(String toNumber, String messageText) {
 		  // Find your Account Sid and Token at twilio.com/console
 		    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

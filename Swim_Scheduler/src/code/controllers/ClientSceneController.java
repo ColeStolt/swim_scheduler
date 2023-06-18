@@ -3,7 +3,6 @@ package code.controllers;
 import java.io.IOException;
 
 import code.customUI.ClientCard;
-import code.dataObjects.Client;
 import code.datapersistance_dao.ClientCardReferenceSingleton;
 import code.datapersistance_dao.ClientDataDB;
 import code.datapersistance_dao.MainScreenSingleton;

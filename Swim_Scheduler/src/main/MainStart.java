@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -80,7 +81,11 @@ public class MainStart {
                 .setAccessType("offline")
                 .build();
         
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        
+        // Random port number above 8000 and below 9000
+        Random randPort = new Random();
+        
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(randPort.nextInt(9000 - 8000) + 8000).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 

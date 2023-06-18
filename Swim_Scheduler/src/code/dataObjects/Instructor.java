@@ -3,8 +3,6 @@ package code.dataObjects;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.google.api.services.calendar.Calendar;
-
 /**
  * 
  * @author Cole Stoltz
