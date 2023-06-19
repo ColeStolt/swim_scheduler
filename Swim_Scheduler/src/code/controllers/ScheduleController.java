@@ -198,7 +198,7 @@ public class ScheduleController {
 						instructors.add(new EventAttendee()
 								.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
 					} else {
-						System.out.println("Test");
+						
 					}
 				}
 
@@ -232,8 +232,6 @@ public class ScheduleController {
 					}
 
 					tokens[0] = Integer.toString(hour);
-
-					System.out.println(minute);
 
 					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
 				} else {
@@ -290,9 +288,6 @@ public class ScheduleController {
 			String[] recurrence = new String[] { "RRULE:FREQ=WEEKLY;BYDAY=" + tempString + ";COUNT="
 					+ clientTempReference.getClient().getNumberOfLessons() };
 			event.setRecurrence(Arrays.asList(recurrence));
-
-			System.out.println("RRULE:FREQ=WEEKLY;BYDAY=MO,TU,TH,FR;COUNT="
-					+ clientTempReference.getClient().getNumberOfLessons());
 
 			String calendarId = "primary";
 			event = instance.getCalendarReference().events().insert(calendarId, event).execute();
