@@ -157,13 +157,21 @@ public class ScheduleController {
 						+ LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm"))
 								.format(DateTimeFormatter.ofPattern("hh:mm a"))
 						+ "\n\n\nSee you then!");
+				
+				// Split and check time
+				String tokes[] = timeField.getText().split(":");
 
+				if(Integer.parseInt(tokes[0]) > 12) {
+					tokes[0] = (Integer.parseInt(tokes[0]) - 12) + ":" + tokes[1]; 
+				}				
+				
 				// Text all instructors about start date
 				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
 					TextService.sendText(
 							clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(),
 							clientTempReference.getClient().getClientName() + "\n\n" + "Start date: "
-									+ (startDatePicker.getValue()).format(readableFormat) + "\nStart Time: " + timeField
+									+ (startDatePicker.getValue()).format(readableFormat) + "\nStart Time: "
+									+ tokes[0] + " "
 									+ morningNoonComboBox.getSelectionModel().getSelectedItem() + "\n\n" + "They have "
 									+ clientTempReference.getClient().getNumberOfLessons() + " lessons at "
 									+ clientTempReference.getClient().getAddressOfLessons());
@@ -185,14 +193,16 @@ public class ScheduleController {
 				ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
 				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
 
-					if (clientTempReference.getClient().getInstructor().contains("@") && clientTempReference.getClient().getInstructor().contains(".com")) {
-						instructors.add(new EventAttendee().setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+					if (clientTempReference.getClient().getInstructor().contains("@")
+							&& clientTempReference.getClient().getInstructor().contains(".com")) {
+						instructors.add(new EventAttendee()
+								.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
 					} else {
 						System.out.println("Test");
 					}
 				}
-				
-				if(instructors.size() != 0) {
+
+				if (instructors.size() != 0) {
 					event.setAttendees(instructors);
 				}
 			}
@@ -228,6 +238,7 @@ public class ScheduleController {
 					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
 				} else {
 					minute = minute + 30;
+					tokens[1] = minute + "";
 					timeField.setPlainText(tokens[0] + ":" + tokens[1]);
 				}
 
