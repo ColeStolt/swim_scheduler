@@ -193,12 +193,12 @@ public class ScheduleController {
 				ArrayList<EventAttendee> instructors = new ArrayList<EventAttendee>();
 				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
 
-					if (clientTempReference.getClient().getInstructor().contains("@")
-							&& clientTempReference.getClient().getInstructor().contains(".com")) {
+					if (clientTempReference.getClient().getInstructor().get(i).getInstructorEmail().contains("@")
+							&& clientTempReference.getClient().getInstructor().get(i).getInstructorEmail().contains(".com")) {
 						instructors.add(new EventAttendee()
 								.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
 					} else {
-						
+						System.out.println("Not working");
 					}
 				}
 

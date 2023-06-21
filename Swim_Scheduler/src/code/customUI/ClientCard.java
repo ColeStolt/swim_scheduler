@@ -92,7 +92,7 @@ public class ClientCard extends BorderPane{
 		topLabels.setAlignment(Pos.CENTER);
 		topLabels.setMinWidth(0);
 		
-		if(clientReference.isPaidInFull()) {
+		if((clientReference.getAmountPaid() > clientReference.getTotalAmountForLessons() - 1 && clientReference.getAmountPaid() < clientReference.getTotalAmountForLessons() + 1 )) {
 			topLabels.setStyle("-fx-background-color: #234736;");
 		} else {
 			topLabels.setStyle("-fx-background-color: #442727;");
@@ -126,8 +126,8 @@ public class ClientCard extends BorderPane{
 		Label numberOfLessonsLabelBottom = new Label("LESSONS");
 		Label amountPerLessonLabelTop = new Label("$ " + String.format("%.2f", clientReference.getAmountPerLesson()));
 		Label amountPerLessonLabelBottom = new Label("$ PER LESSON");
-		Label totalAmountLabelTop = new Label("$ " + String.format("%.2f", clientReference.getTotalAmountForLessons()));
-		Label totalAmountLabelBottom = new Label("$ TOTAL");
+		Label totalAmountLabelTop = new Label("$ " + String.format("%.2f", clientReference.getAmountPaid()));
+		Label totalAmountLabelBottom = new Label("$ " + String.format("%.2f", clientReference.getTotalAmountForLessons() - clientReference.getAmountPaid()) + " LEFT");
 	
 		// Pane IDS
 		totalKidsPane.setId("kidsPane");

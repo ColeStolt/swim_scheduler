@@ -64,7 +64,7 @@ public class ClientEntryController {
 	private ChoiceBox<Instructor> instructorChoice;
 	private Spinner<Integer> numberOfLessonsField;
 	private Spinner<Double> amountPerLessonField;
-	private RadioButton paidInFullRadio;
+	private Spinner<Double> amountPaidField;
 	
 	// List of comboBoxes for getting all instructors
 	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
@@ -73,9 +73,9 @@ public class ClientEntryController {
 	SpinnerValueFactory<Integer> kidValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 15, 1);
 	SpinnerValueFactory<Integer> lessonValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 12);
 	SpinnerValueFactory<Double> lessonAmountValues = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.00, 400.00, 100.00, 5.00);
+	SpinnerValueFactory<Double> amountPaidValues = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.00, 50000.00, 100.00, 10.00);
 	
 	// Panes
-	private HBox radioAndLabel;
 	private BorderPane titlePane;
 	private HBox instructorsAdditionHBox;
 	
@@ -87,7 +87,7 @@ public class ClientEntryController {
 	private Label instructorLabel;
 	private Label numberOfLessonsLabel;
 	private Label amountPerLessonLabel;
-	private Label paidInFullLabel;
+	private Label amountPaidLabel;
 	private Label clientInfoTitle;
 	private Label lessonInfoTitle;
 	
@@ -149,7 +149,7 @@ public class ClientEntryController {
 			if(clientTempReference.getClient() == null) {
 				
 				// Create client
-				Client newClient = new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), kidsField.getValue().shortValue(), tempList, numberOfLessonsField.getValue().shortValue(), amountPerLessonField.getValue().floatValue(), paidInFullRadio.isSelected());
+				Client newClient = new Client(nameField.getText(), addressField.getText(), phoneNumberField.getText(), kidsField.getValue().shortValue(), tempList, numberOfLessonsField.getValue().shortValue(), amountPerLessonField.getValue().floatValue(), false);
 				
 				clientDB.getClientDB().add(newClient);
 				clientDB.saveData();
@@ -252,15 +252,22 @@ public class ClientEntryController {
 		instructorChoice = new ChoiceBox<Instructor>();
 		numberOfLessonsField = new Spinner<Integer>();
 		amountPerLessonField = new Spinner<Double>();
-		paidInFullRadio = new RadioButton();
+		amountPaidField = new Spinner<Double>();
 		addInstructorButton = new Button("+");
 		removeInstructorButton = new Button("-");
 		
 		// Adding listener to a spinner
 		amountPerLessonField.setEditable(true);
+		amountPaidField.setEditable(true);
 		amountPerLessonField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*") || newValue.length() > 3){
             	amountPerLessonField.getEditor().setText(oldValue);
+
+            }
+        });
+		amountPaidField.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*") || newValue.length() > 5){
+            	amountPaidField.getEditor().setText(oldValue);
 
             }
         });
@@ -268,20 +275,21 @@ public class ClientEntryController {
 		// Adding data to spinners
 		amountPerLessonField.setValueFactory(lessonAmountValues);
 		numberOfLessonsField.setValueFactory(lessonValues);
+		amountPaidField.setValueFactory(amountPaidValues);
 		
 		
 		// Declare Labels
 		instructorLabel = new Label("Instructor:");
 		numberOfLessonsLabel = new Label("Number Of Lessons (Per Kid):");
 		amountPerLessonLabel = new Label("Amount Per Lesson: ");
-		paidInFullLabel = new Label("Paid In Full:");
+		amountPaidLabel = new Label("Amount Paid:");
 		lessonInfoTitle = new Label("Lesson Info");
 		
 		// Label Settings
 		instructorLabel.setId("labels");
 		numberOfLessonsLabel.setId("labels");
 		amountPerLessonLabel.setId("labels");
-		paidInFullLabel.setId("labels");
+		amountPaidLabel.setId("labels");
 		lessonInfoTitle.setId("lessonInfoTitle");
 		
 		// Choicebox settings
@@ -293,16 +301,13 @@ public class ClientEntryController {
 		// Field settings
 		numberOfLessonsField.setId("spinners");
 		amountPerLessonField.setId("spinners");
-		
-		// Radio settings
-		paidInFullRadio.setId("radioButton");
+		amountPaidField.setId("spinners");
 		
 		// Button Settings
 		addInstructorButton.setId("addButton");
 		removeInstructorButton.setId("addButton"); // same css id for same style
 		
 		// Declare Panes
-		radioAndLabel = new HBox();
 		instructorsAdditionHBox = new HBox();
 		titlePane = new BorderPane();
 		
@@ -312,8 +317,6 @@ public class ClientEntryController {
 		removeInstructorButton(removeInstructorButton, instructorsAdditionHBox);
 		
 		// Add to panes
-		radioAndLabel.getChildren().add(paidInFullLabel);
-		radioAndLabel.getChildren().add(paidInFullRadio);
 		titlePane.setCenter(lessonInfoTitle);
 		instructorsAdditionHBox.getChildren().add(instructorChoice);
 		instructorsAdditionHBox.getChildren().add(addInstructorButton);
@@ -327,7 +330,8 @@ public class ClientEntryController {
 		clientLessonInfoEntryVBox.getChildren().add(numberOfLessonsField);
 		clientLessonInfoEntryVBox.getChildren().add(amountPerLessonLabel);
 		clientLessonInfoEntryVBox.getChildren().add(amountPerLessonField);
-		clientLessonInfoEntryVBox.getChildren().add(radioAndLabel);
+		clientLessonInfoEntryVBox.getChildren().add(amountPaidLabel);
+		clientLessonInfoEntryVBox.getChildren().add(amountPaidField);
 	}
 	
 	
@@ -358,7 +362,7 @@ public class ClientEntryController {
 		kidsField.getValueFactory().setValue((int) clientTempReference.getClient().getNumberOfKids());
 		numberOfLessonsField.getValueFactory().setValue((int) clientTempReference.getClient().getNumberOfLessons());
 		amountPerLessonField.getValueFactory().setValue((double) clientTempReference.getClient().getAmountPerLesson());
-		paidInFullRadio.setSelected(clientTempReference.getClient().isPaidInFull());
+		amountPaidField.getValueFactory().setValue(clientTempReference.getClient().getAmountPaid());
 	}
 	
 	private void enableDeleteButton() {
@@ -483,7 +487,7 @@ public class ClientEntryController {
 				clientDB.getClientDB().get(i).setInstructor(tempList);
 				clientDB.getClientDB().get(i).setNumberOfLessons(numberOfLessonsField.getValue().shortValue());
 				clientDB.getClientDB().get(i).setAmountPerLesson(amountPerLessonField.getValue().floatValue());
-				clientDB.getClientDB().get(i).setPaidInFull(paidInFullRadio.isSelected());
+				clientDB.getClientDB().get(i).setAmountPaid(amountPaidField.getValue().doubleValue());
 				clientDB.getClientDB().get(i).updateTotal();
 				break;
 			}

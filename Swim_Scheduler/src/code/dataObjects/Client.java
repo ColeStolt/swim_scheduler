@@ -23,11 +23,13 @@ public class Client implements java.io.Serializable{
 	private short numberOfKids;
 	// instructor may be changed to an instructor object
 	private ArrayList<Instructor> instructor;
+	private ArrayList<Kid> kids;
 	private short numberOfLessons;
 	private float amountPerLesson;
 	private float totalAmountForLessons;
 	private boolean paidInFull;
 	private boolean scheduled;
+	private double amountPaid;
 	
 	private final String clientID = UUID.randomUUID().toString();
 	// Data structure to hold schedule data
@@ -162,6 +164,14 @@ public class Client implements java.io.Serializable{
 
 	public void setScheduled(boolean scheduled) {
 		this.scheduled = scheduled;
+	}
+
+	public double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(double amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 	
 	
