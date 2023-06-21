@@ -23,6 +23,7 @@ public class Client implements java.io.Serializable{
 	private short numberOfKids;
 	// instructor may be changed to an instructor object
 	private ArrayList<Instructor> instructor;
+	private ArrayList<Kid> kids;
 	private short numberOfLessons;
 	private float amountPerLesson;
 	private float totalAmountForLessons;
