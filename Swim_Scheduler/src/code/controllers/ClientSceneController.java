@@ -39,11 +39,11 @@ public class ClientSceneController {
 			
 			ClientCard card = new ClientCard(clientData.getClientDB().get(i));
 			
+			
 			card.setOnMouseClicked((new EventHandler<MouseEvent>() { 
 				   public void handle(MouseEvent event) { 
 				      try {
 				    	  clientTempReference.setClientReference(card.getClientReference());
-				    	 
 						mainScreen.getPane().setCenter(FXMLLoader.load(getClass().getResource("/resources/scenes/ClientDataFieldsScene.fxml")));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

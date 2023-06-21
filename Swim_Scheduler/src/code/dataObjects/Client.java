@@ -28,6 +28,7 @@ public class Client implements java.io.Serializable{
 	private float totalAmountForLessons;
 	private boolean paidInFull;
 	private boolean scheduled;
+	private double amountPaid;
 	
 	private final String clientID = UUID.randomUUID().toString();
 	// Data structure to hold schedule data
@@ -162,6 +163,14 @@ public class Client implements java.io.Serializable{
 
 	public void setScheduled(boolean scheduled) {
 		this.scheduled = scheduled;
+	}
+
+	public double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(double amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 	
 	
