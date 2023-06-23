@@ -3,6 +3,7 @@ package code.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import code.customUI.KidEntry;
 import code.customUI.MaskedTextField;
 import code.dataObjects.Client;
 import code.dataObjects.Instructor;
@@ -22,7 +23,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -66,8 +66,9 @@ public class ClientEntryController {
 	private Spinner<Double> amountPerLessonField;
 	private Spinner<Double> amountPaidField;
 	
-	// List of comboBoxes for getting all instructors
+	// Arrays for holding multiple instructor and kid fields
 	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes; 
+	private ArrayList<KidEntry> kidInformation;
 	
 	// Spinner Data
 	SpinnerValueFactory<Integer> kidValues = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 15, 1);
