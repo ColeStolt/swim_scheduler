@@ -37,6 +37,7 @@
 	-fx-font-size: 25px;
 	-fx-background-color: #242B32;
 	-fx-mark-color: #ffffff;
+	-fx-background-insets: 0;
 }
 
 #labels{
@@ -59,6 +60,7 @@
 }
 
 #choiceBox {
+	-fx-background-insets: 0;
 	-fx-border-color:  #343E47;
 	-fx-border-width: 0px 0px 10px 10px;
 	-fx-font-family: Calibri;
@@ -89,10 +91,11 @@
 	-fx-border-width: 0px 0px 10px 10px;
 	-fx-font-family: Calibri;
 	-fx-font-weight: bold;
-	-fx-font-size: 25px;
+	-fx-font-size: 15px;
 	-fx-background-color: #242B32;
 	-fx-cursor: hand;
 	-fx-text-fill: #ffffff;
+	-fx-background-insets: 0;
 }
 
 #addButton:hover {
@@ -160,5 +163,21 @@
 #deleteButton:pressed{
 	-fx-background-color: #c88042;
 
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+#kidScroller {
+	-fx-border-color: #343E47;
+	-fx-border-width: 0px 0px 10px 10px;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-background-color: #343E47;
+	-fx-base: #343E47;
+	-fx-border-radius: 25px;
+	-fx-background-radius: 25px;
+	-fx-background-insets: 0;
 }
 

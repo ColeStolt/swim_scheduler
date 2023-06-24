@@ -173,6 +173,14 @@ public class Client implements java.io.Serializable{
 	public void setAmountPaid(double amountPaid) {
 		this.amountPaid = amountPaid;
 	}
+
+	public ArrayList<Kid> getKids() {
+		return kids;
+	}
+
+	public void setKids(ArrayList<Kid> kids) {
+		this.kids = kids;
+	}
 	
 	
 	

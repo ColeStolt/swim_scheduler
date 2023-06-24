@@ -22,6 +22,18 @@ public class KidEntry extends HBox{
 	public KidEntry() {
 		UISetup();
 	}
+	
+	// Parameterized constructor
+	public KidEntry(String placeHolderText) {
+		UISetup();
+		nameInputField.setPromptText(placeHolderText);
+	}
+	
+	public KidEntry(String placeHolderText, String fieldText) {
+		UISetup();
+		nameInputField.setPromptText(placeHolderText);
+		nameInputField.setText(fieldText);
+	}
 
 	// UI Setup
 	private void UISetup() {

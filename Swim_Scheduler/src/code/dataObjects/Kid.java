@@ -26,11 +26,11 @@ public class Kid implements Serializable {
 	
 	// Getters / Setters
 
-	public String getAgeIdentifier() {
+	public String getKidInformation() {
 		return kidInformation;
 	}
 
-	public void setAgeIdentifier(String kidInformation) {
+	public void setKidInformation(String kidInformation) {
 		this.kidInformation = kidInformation;
 	}
 	
