@@ -90,7 +90,6 @@ public class ScheduleController {
 		timeBorderpane.setCenter(timeField);
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	public void sendAndSaveSchedule() throws IOException {
 
 		boolean daySelected = false;
@@ -166,7 +165,9 @@ public class ScheduleController {
 				}				
 				
 				// Text all instructors about start date
+				String kidList = createKidListString();
 				for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
+					
 					TextService.sendText(
 							clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(),
 							clientTempReference.getClient().getClientName() + "\n\n" + "Start date: "
@@ -174,7 +175,8 @@ public class ScheduleController {
 									+ tokes[0] + " "
 									+ morningNoonComboBox.getSelectionModel().getSelectedItem() + "\n\n" + "They have "
 									+ clientTempReference.getClient().getNumberOfLessons() + " lessons at "
-									+ clientTempReference.getClient().getAddressOfLessons());
+									+ clientTempReference.getClient().getAddressOfLessons() + "\n\n" 
+									+ kidList);
 				}
 			}
 
@@ -183,9 +185,10 @@ public class ScheduleController {
 			String formattedValue = (startDatePicker.getValue()).format(formatter);
 
 			// Event creation
+			String kidList = createKidListString();
 			Event event = new Event().setSummary(clientTempReference.getClient().getClientName() + " Swim Lessons")
 					.setLocation(clientTempReference.getClient().getAddressOfLessons())
-					.setDescription(clientTempReference.getClient().getNumberOfKids() + " kids");
+					.setDescription(kidList);
 
 			// Check again ------------------------------
 			if (notifyCheck.isSelected()) {
@@ -306,6 +309,16 @@ public class ScheduleController {
 			mainScreen.getPane().setCenter(
 					FXMLLoader.load(getClass().getResource("/resources/scenes/ScheduledAndUnscheduledScene.fxml")));
 		}
+	}
+	
+	private String createKidListString() {
+		String kidList = "";
+		
+		for(int i = 0; i < clientTempReference.getClient().getKids().size(); i++) {
+			kidList =  kidList + "\n" + "Kid " + (i + 1) + ": " + clientTempReference.getClient().getKids().get(i).getKidInformation() + "\n";
+		}
+		
+		return kidList;
 	}
 
 	private boolean parseTime() {
