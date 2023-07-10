@@ -92,8 +92,10 @@ public class ClientCard extends BorderPane{
 		topLabels.setAlignment(Pos.CENTER);
 		topLabels.setMinWidth(0);
 		
-		if((clientReference.getAmountPaid() > clientReference.getTotalAmountForLessons() - 1 && clientReference.getAmountPaid() < clientReference.getTotalAmountForLessons() + 1 )) {
+		if(((clientReference.getAmountPaid() > clientReference.getTotalAmountForLessons() - 1 && clientReference.getAmountPaid() < clientReference.getTotalAmountForLessons() + 1 )) && clientReference.isContractRecieved() == true) {
 			topLabels.setStyle("-fx-background-color: #234736;");
+		} else if (((clientReference.getAmountPaid() > clientReference.getTotalAmountForLessons() - 1 && clientReference.getAmountPaid() < clientReference.getTotalAmountForLessons() + 1 )) || clientReference.isContractRecieved() == true) {
+			topLabels.setStyle("-fx-background-color: #473423;");
 		} else {
 			topLabels.setStyle("-fx-background-color: #442727;");
 		}

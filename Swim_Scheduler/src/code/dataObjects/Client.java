@@ -30,6 +30,7 @@ public class Client implements java.io.Serializable{
 	private boolean paidInFull;
 	private boolean scheduled;
 	private double amountPaid;
+	private boolean contractRecieved;
 	
 	private final String clientID = UUID.randomUUID().toString();
 	// Data structure to hold schedule data
@@ -180,6 +181,14 @@ public class Client implements java.io.Serializable{
 
 	public void setKids(ArrayList<Kid> kids) {
 		this.kids = kids;
+	}
+
+	public boolean isContractRecieved() {
+		return contractRecieved;
+	}
+
+	public void setContractRecieved(boolean contractRecieved) {
+		this.contractRecieved = contractRecieved;
 	}
 	
 	
