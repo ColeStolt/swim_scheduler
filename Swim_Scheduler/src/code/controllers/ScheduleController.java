@@ -1,6 +1,7 @@
 package code.controllers;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -172,7 +173,7 @@ public class ScheduleController {
 							clientTempReference.getClient().getInstructor().get(i).getInstructorPhoneNumber(),
 							clientTempReference.getClient().getClientName() + "\n\n" + "Start date: "
 									+ (startDatePicker.getValue()).format(readableFormat) + "\nStart Time: "
-									+ tokes[0] + " "
+									+ tokes[0] + ":" + tokes[1] + " "
 									+ morningNoonComboBox.getSelectionModel().getSelectedItem() + "\n\n" + "They have "
 									+ clientTempReference.getClient().getNumberOfLessons() + " lessons at "
 									+ clientTempReference.getClient().getAddressOfLessons() + "\n\n" 
@@ -198,8 +199,10 @@ public class ScheduleController {
 
 					if (clientTempReference.getClient().getInstructor().get(i).getInstructorEmail().contains("@")
 							&& clientTempReference.getClient().getInstructor().get(i).getInstructorEmail().contains(".com")) {
+					
 						instructors.add(new EventAttendee()
 								.setEmail(clientTempReference.getClient().getInstructor().get(i).getInstructorEmail()));
+					
 					} else {
 						System.out.println("Not working");
 					}
@@ -293,8 +296,9 @@ public class ScheduleController {
 			event.setRecurrence(Arrays.asList(recurrence));
 
 			String calendarId = "primary";
+		
 			event = instance.getCalendarReference().events().insert(calendarId, event).execute();
-
+			
 			// Add the event to each instructors calendar
 			for (int i = 0; i < clientTempReference.getClient().getInstructor().size(); i++) {
 

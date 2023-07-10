@@ -145,6 +145,15 @@
 	-fx-border-width: 0px 0px 55px 0px;
 }
 
+#checkBox {
+	-fx-text-fill: #979797;
+	-fx-font-family: Calibri;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+	-fx-border-color:  #343E47;
+	-fx-border-width: 10px 0 15px 10px;
+}
+
 #deleteButton {
 	-fx-background-color:  #c2722d;
 	-fx-border-radius: 10px;

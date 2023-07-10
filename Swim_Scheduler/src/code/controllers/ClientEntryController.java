@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -69,6 +70,7 @@ public class ClientEntryController {
 	private Spinner<Integer> numberOfLessonsField;
 	private Spinner<Double> amountPerLessonField;
 	private Spinner<Double> amountPaidField;
+	private CheckBox contractRecieved;
 
 	// Arrays for holding multiple instructor and kid fields
 	private ArrayList<ChoiceBox<Instructor>> instructorChoiceBoxes;
@@ -177,6 +179,9 @@ public class ClientEntryController {
 				// Set kid arrayList in client to kid arraylist created above
 				newClient.setKids(kids);
 				
+				// Set if client contract has been paid
+				newClient.setContractRecieved(contractRecieved.isSelected());
+				
 				clientDB.getClientDB().add(newClient);
 				clientDB.saveData();
 				// Add client to chart data
@@ -227,6 +232,7 @@ public class ClientEntryController {
 		nameField = new TextField();
 		phoneNumberField = new MaskedTextField("(###) ###-####");
 		addressField = new TextField();
+		contractRecieved = new CheckBox("Contract Recieved?");
 
 		// Declare panes
 		titlePane = new BorderPane();
@@ -260,6 +266,7 @@ public class ClientEntryController {
 		nameField.setId("fields");
 		phoneNumberField.setId("phoneNumberField");
 		addressField.setId("fields");
+		contractRecieved.setId("checkBox");
 
 		// Pane settings
 		titlePane.setId("titlePane");
@@ -281,6 +288,7 @@ public class ClientEntryController {
 		clientInfoEntriesVBox.getChildren().add(phoneNumberField);
 		clientInfoEntriesVBox.getChildren().add(addressLabel);
 		clientInfoEntriesVBox.getChildren().add(addressField);
+		clientInfoEntriesVBox.getChildren().add(contractRecieved);
 		clientInfoEntriesVBox.getChildren().add(kidLabelAndButtons);
 		clientInfoEntriesVBox.getChildren().add(kidScroll);
 
@@ -411,6 +419,7 @@ public class ClientEntryController {
 		numberOfLessonsField.getValueFactory().setValue((int) clientTempReference.getClient().getNumberOfLessons());
 		amountPerLessonField.getValueFactory().setValue((double) clientTempReference.getClient().getAmountPerLesson());
 		amountPaidField.getValueFactory().setValue(clientTempReference.getClient().getAmountPaid());
+		contractRecieved.setSelected(clientTempReference.getClient().isContractRecieved());
 	}
 
 	private void enableDeleteButton() {
@@ -573,6 +582,7 @@ public class ClientEntryController {
 				clientDB.getClientDB().get(i).setAmountPerLesson(amountPerLessonField.getValue().floatValue());
 				clientDB.getClientDB().get(i).setNumberOfKids((short) kidInformationFields.size());
 				clientDB.getClientDB().get(i).setAmountPaid(amountPaidField.getValue().doubleValue());
+				clientDB.getClientDB().get(i).setContractRecieved(contractRecieved.isSelected());
 				clientDB.getClientDB().get(i).updateTotal();
 				break;
 			}
