@@ -20,13 +20,24 @@ public class EventCard extends BorderPane{
 	// Panes
 	private HBox borderPaneTop;
 	
+	// Labels
+	
 	public EventCard(String eventSummary, String eventLocation, String eventDescription) {
 		this.eventSummary = eventSummary;
 		this.eventLocation = eventLocation;
 		this.eventDescription = eventDescription;
+		this.setId("Event Card");
 	}
 
 	private void UISetup() {
+		
+	}
+	
+	private void paneTop() {
+		
+	}
+	
+	private void paneMiddle() {
 		
 	}
 	
